@@ -4,13 +4,13 @@ _G.fs = require("fs")
 local sql = require("sqlite3")
 _G.path = require("path")
 _G.CORO = require("coro-http")
-_G.SPAWN = require('coro-spawn')
+_G.SPAWN = require("coro-spawn")
 _G.TIMER = require("timer")
 _G.JSON = require("json")
 _G.URL = require("./lib/url.lua")
 _G.DISCORDIA = discordia
 _G.CLIENT = discordia.Client()
-_G.CONFIG = require("./config.lua")
+_G.CONFIG = require("./config1.lua")
 _G.MUSIC = require("./lib/music.lua")
 
 -- not used
