@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS users (
     items TEXT NOT NULL,
     ores TEXT NOT NULL,
     stars INTEGER NOT NULL,
-    money_changing INTEGER NOT NULL,
+    stars_changing INTEGER NOT NULL,
     UNIQUE(id)
 );
 ]]
@@ -50,7 +50,7 @@ function CreateRowUser(id)
 
     -- Create row
     if exists == 0 then
-        db('INSERT INTO users (id, stars, items, ores, money_changing) VALUES ("' .. id .. '", 0, "{}", "{}", 0)')
+        db('INSERT INTO users (id, stars, items, ores, stars_changing) VALUES ("' .. id .. '", 0, "{}", "{}", 0)')
     end
 	
 	return id
@@ -118,6 +118,9 @@ command.Register("gamble", "Gamble your stars away and hope your lucky", "econom
 	if command.Cooldown(msg, "gamble",5, "Calm down on the gambling bro, wait **%s** seconds before gambling again.") then return end
 	
 	local id = CreateRowUser(msg.author.id)
-    local stars = db:rowexec('SELECT money_changing FROM users WHERE id = "' .. id .. '"')
-       
+    local stars_changing = db:rowexec('SELECT stars_changing FROM users WHERE id = "' .. id .. '"')
+	
+	if stars_changing then return msg:reply("Your star balance is currently changing.") end
+	
+	msg.reply("Placeholder")
 end)
