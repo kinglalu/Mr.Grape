@@ -1,50 +1,50 @@
-local COMMAND = {}
+local command = {}
 
-COMMAND.name = "command"
-COMMAND.commands = {}
-COMMAND.prefix = "+"
-_G.PREFIX = COMMAND.prefix
+command.name = "command"
+command.commands = {}
+command.prefix = "+"
+_G.PREFIX = command.prefix
 
-function COMMAND.SetPrefix(command)
-	COMMAND.prefix = command or "+"
+function command.SetPrefix(command)
+	command.prefix = command or "+"
 end
 
-function COMMAND.GetPrefix()
+function command.GetPrefix()
 	return command.prefix
 end
 
-function COMMAND.Register(command, desc, category, func)
-	if not command then
-		print("[COMMAND]", "[Error]", "Invalid command name given")
+function command.Register(label, desc, category, func)
+	if not label then
+		print("[command]", "[Error]", "Invalid command name given")
 		return
 	end
 
 	if not func then
-		print("[COMMAND]", "[Error]", "Invalid  function given")
+		print("[command]", "[Error]", "Invalid  function given")
 		return
 	end
 
-	command = string.lower(command)
+	label = string.lower(label)
 
-	COMMAND.commands[command] = {
-		command = command,
+	command.commands[label] = {
+		command = label,
 		desc = desc or "n/a",
 		category = category or "n/a",
 		func = func
 	}
 
-	print("[COMMAND]", "The command", command, "has now been registered")
+	print("[command]", "The command", label, "has now been registered")
 end
 
-function COMMAND.Reload(command)
+function command.Reload(command)
 	package.loaded[command] = nil
 end
 
-function COMMAND.GetCommand(command)
-	return COMMAND.commands[command] or false
+function command.Getcommand(command)
+	return command.commands[command] or false
 end
 
-function COMMAND.FormatArguments(args)
+function command.FormatArguments(args)
 	local Start, End = nil, nil
 
 	for k, v in pairs(args) do
@@ -69,42 +69,40 @@ function COMMAND.FormatArguments(args)
 	return args
 end
 
-if CONFIG.commandEvent then
-	CLIENT:on("messageCreate", function(msg)
-		local author = msg.author
-		local content = msg.content
-		if author == CLIENT.user then return end
-		if author.bot then return end
+CLIENT:on("messageCreate", function(msg)
+	local author = msg.author
+	local content = msg.content
+	if author == CLIENT.user then return end
+	if author.bot then return end
 
-		local prefix = command.GetPrefix()
+	local prefix = command.GetPrefix()
 
-		if not (string.sub(content, 1, string.len(prefix)) == prefix) then
-			return
-		end
-		
-		local args = command.FormatArguments(string.Explode(" ", content))
+	if not (string.sub(content, 1, string.len(prefix)) == prefix) then
+		return
+	end
+	
+	local args = command.FormatArguments(string.Explode(" ", content))
 
-		args[1] = string.sub(args[1], string.len(prefix) + 1)
+	args[1] = string.sub(args[1], string.len(prefix) + 1)
 
-		local command = command.GetCommand(string.lower(args[1]))
+	local command = command.Getcommand(string.lower(args[1]))
 
-		if not command then print("Invalid command", "'"..args[1].."'") return end
+	if not command then print("Invalid command", "'"..args[1].."'") return end
 
-		table.remove(args, 1)
+	table.remove(args, 1)
 
-		command.func(msg, args)
-	end)
-end
+	command.func(msg, args)
+end)
 
-COMMAND.cooling = {}
+command.cooling = {}
 
 -- Boolean; Returns true if the command is on cooldown for the message sender, false if they arent
-function COMMAND.Cooldown(message, id, time, response)
+function command.Cooldown(message, id, time, response)
 	local id = tostring(message.author.id)
 	
-	if COMMAND.cooling[id] == nil then COMMAND.cooling[id] = {} end
+	if command.cooling[id] == nil then command.cooling[id] = {} end
 
-	local cmds = COMMAND.cooling[id]
+	local cmds = command.cooling[id]
 	local cooldown = false;
 
 	if cmds[id] ~= nil then
@@ -131,7 +129,7 @@ function COMMAND.Cooldown(message, id, time, response)
 end
 
 -- Guild Member; Returns the first mention, first ID, or author of the message specified 
-function COMMAND.FirstMention(message)
+function command.FirstMention(message)
 	local args = string.Explode(" ", message.content)
 	local mention = message.mentionedUsers.first;
 	
@@ -142,4 +140,4 @@ function COMMAND.FirstMention(message)
 	return mention
 end
 
-return COMMAND
+return command
