@@ -1,6 +1,7 @@
 command.Register("userinfo", "Get info about a user","utility",function(msg, args)
   local person = command.FirstMention(msg)
 
+  
   msg:reply({
     embed = {
      title = person.name.."'s UserInfo",
