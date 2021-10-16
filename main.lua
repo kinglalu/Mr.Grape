@@ -84,4 +84,5 @@ for k, v in fs.scandirSync("./events") do
 	print("	", "[EVENTS]", "Success:", k, "has been loaded.")
 end
 
+
 CLIENT:run('Bot ' .. CONFIG.token)
