@@ -10,7 +10,7 @@ _G.JSON = require("json")
 _G.URL = require("./lib/url.lua")
 _G.DISCORDIA = discordia
 _G.CLIENT = discordia.Client()
-_G.CONFIG = require("./config1.lua")
+_G.CONFIG = require("./config.lua")
 _G.MUSIC = require("./lib/music.lua")
 
 -- not used
