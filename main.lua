@@ -38,7 +38,6 @@ end
 
 _G.CLIENT:on("ready", function()
 	-- local conn = sql.open("db.sqlite3")
-	local uptime = os.time()
 	print("Ready!")
 	setGame()
 end)
