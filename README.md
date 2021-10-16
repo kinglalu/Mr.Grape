@@ -2,7 +2,7 @@
 	<img src="https://i.ibb.co/RpBbyRP/mrgrape.png" title="Mr. Grape" alt="Mr. Grape" />
 	<h1>Mr. Grape</h1>
 	<p>By kinglalu#2780,Divide#1334, and EndlessVortex#4547<p>
-	<p>Mr. Grape is an Open Source Discord Bot made in Lua using [Discordia](https://github.com/SinisterRectus/Discordia) that includes Music features, an Economy and more!</p>
+	<p>Mr. Grape is an Open Source Discord Bot made in Lua using Discordia that includes Music features, an Economy and more!</p>
 	<p> Help support Mr Grape by voting for it here on top.gg; https://top.gg/bot/743833062265323651/vote </p>
 	<p><a href="https://discord.com/oauth2/authorize?client_id=743833062265323651&scope=bot&permissions=0">
     <img src="https://i.ibb.co/bRt9NHb/invite.png" width="147" height="32" alt="Invite to your server!"></a><p>
