@@ -70,7 +70,7 @@ for k, v in fs.scandirSync("./handler") do
 	end
 end
 
-print("[CMDS]", "Loading command files")
+print("[CMDS]", "Loading command files")+
 for k, v in fs.scandirSync("./commands") do
 	print("[CMDS]", "Loading:", k)
 	local data = require("./commands/"..k)
