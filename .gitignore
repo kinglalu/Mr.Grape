@@ -1,4 +1,5 @@
 /token.txt
 /discordia.log
 /gateway.json
+/config.lua
 /db.sqlite3
