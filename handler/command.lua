@@ -5,8 +5,8 @@ command.commands = {}
 command.prefix = "+"
 _G.PREFIX = command.prefix
 
-function command.SetPrefix(command)
-	command.prefix = command or "+"
+function command.SetPrefix(cmd)
+	command.prefix = cmd or "+"
 end
 
 function command.GetPrefix()
@@ -36,12 +36,12 @@ function command.Register(label, desc, category, func)
 	print("[command]", "The command", label, "has now been registered")
 end
 
-function command.Reload(command)
-	package.loaded[command] = nil
+function command.Reload(cmd)
+	package.loaded[cmd] = nil
 end
 
-function command.Getcommand(command)
-	return command.commands[command] or false
+function command.Getcommand(cmd)
+	return command.commands[cmd] or false
 end
 
 function command.FormatArguments(args)
