@@ -1,4 +1,4 @@
 return {
-	token = "ODg0MjQ3MjM4MjkxODkwMjM2.YTVtag.FkbwxiCNdGAO8Z_V7faZQHS56kg",
+	token = "bot-token",
 	apodkey = "apod-key"
 }
