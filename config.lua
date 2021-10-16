@@ -1,4 +1,4 @@
 return {
-	token = "bot token",
-	apodkey = "apod key"
+	token = "bot-token",
+	apodkey = "apod-key"
 }
