@@ -10,7 +10,6 @@ command.Register("userinfo", "Get info about a user","utility",function(msg, arg
         {name = 'Discriminator', value = person.discriminator, inline = true},
         {name = 'ID', value = person.id, inline = true},
         {name = 'Highest Role', value = '<@&' .. person.highestRole.id .. '>', inline = true},
-        --{name = 'Status', value = m.status:gsub('^%l', upper), inline = true},
         {name = 'Joined Server', value = person.joinedAt and person.joinedAt:gsub('%..*', ''):gsub('T', ' '), inline = true},
         {name = 'Joined Discord', value = DISCORDIA.Date.fromSnowflake(person.id):toISO(' ', ''), inline = true},
       },
