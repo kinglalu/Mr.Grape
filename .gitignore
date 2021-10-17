@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ./token.txt
 ./discordia.log
 ./gateway.json
@@ -7,3 +8,10 @@
 gateway.json
 discordia.log
 db.sqlite3
+=======
+token.txt
+discordia.log
+gateway.json
+config.lua
+db.sqlite3
+>>>>>>> 663d4a5eed49b13f43f7cbfae697b65bfd27e932
