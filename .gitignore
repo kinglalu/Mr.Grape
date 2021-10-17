@@ -1,9 +1,4 @@
-./token.txt
-./discordia.log
-./gateway.json
-./config.lua
-./db.sqlite3
-.gitignore
-gateway.json
-discordia.log
+config.lua
 db.sqlite3
+discordia.log
+gateway.json
