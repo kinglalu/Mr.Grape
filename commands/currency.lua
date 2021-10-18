@@ -25,7 +25,7 @@ local fails = {
 }
 
 local sql = require("sqlite3")
-local db = sql.open("db.sqlite3")
+local db = sql.open("grape.db")
 
 db:exec[[
 CREATE TABLE IF NOT EXISTS users (
@@ -118,83 +118,73 @@ command.Register("gamble", "Gamble your stars away and hope your lucky", "econom
 	if command.Cooldown(msg, "gamble",5, "Calm down on the gambling bro, wait **%s** seconds before gambling again.") then return end
 	
 	local id = CreateRowUser(msg.author.id)
-   -- local stars_changing = db:rowexec('SELECT stars_changing FROM users WHERE id = "' .. id .. '"')
+	-- local stars_changing = db:rowexec('SELECT stars_changing FROM users WHERE id = "' .. id .. '"')
 	
 	--if stars_changing then return msg:reply("Your star balance is currently changing.") end
-    local prize = tonumber(args[1])
-    print(prize)
-    local win = false
-    local stars = db:rowexec('SELECT stars FROM users WHERE id = "' .. id .. '"')
-    local gambleembed = {
-        title = msg.author.name.."'s Gamble",
-        fields = {
-            {name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"}, 
-            {name = "You rolled a...", value = "ㅤ"},
-        },
-        color = DISCORDIA.Color.fromRGB(170,26,232).value,
-        timestamp = DISCORDIA.Date():toISO('T', 'Z')
-    }
-    local function editgamble()
-        msg:setEmbed{
-            title = msg.author.name.."'s Gamble",
-            fields = {
-                {name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"},
-                {name = "You rolled a...", value = "ㅤ"},
-                {name = odds, value = "ㅤ"},
-            },
-            color = DISCORDIA.Color.fromRGB(170,26,232).value,
-            timestamp = DISCORDIA.Date():toISO('T','Z')
-        }
-    end
+	local prize = tonumber(args[1])
+	print(prize)
+	local win = false
+	local stars = db:rowexec('SELECT stars FROM users WHERE id = "' .. id .. '"')
+	local gambleembed = {
+		title = msg.author.name.."'s Gamble",
+		fields = {
+			{name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"}, 
+			{name = "You rolled a...", value = "ㅤ"},
+		},
+		color = DISCORDIA.Color.fromRGB(170,26,232).value,
+		timestamp = DISCORDIA.Date():toISO('T', 'Z')
+	}
+	
     if prize == nil or prize < 0 or prize == 0 then
-        msg:reply("That's not a valid number to gamble!")
+		msg:reply("That's not a valid number to gamble!")
     elseif prize > stars then
-        msg:reply("You don't have enough :star:s!")
+		msg:reply("You don't have enough :star:s!")
     else
-        -- (1,2,3,4,5)
-       local odds = math.random(1,5)
-    local botmsg = assert(msg:reply{
-            embed = gambleembed
-        })
-        
-      TIMER.setTimeout(1000, coroutine.wrap(function()
-        botmsg:setEmbed{
-            title = msg.author.name.."'s Gamble",
-            fields = {
-                {name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"},
-                {name = "You rolled a...", value = "ㅤ"},
-                {name = odds, value = "ㅤ"},
-            },
-            color = DISCORDIA.Color.fromRGB(170,26,232).value,
-            timestamp = DISCORDIA.Date():toISO('T','Z')
-        }
-    end))
-    if odds % 2 == 0 then
-        stars = stars + prize
-        botmsg:setEmbed{
-            title = msg.author.name.."'s Gamble",
-            fields = {
-                {name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"},
-                {name = "You rolled a...", value = "ㅤ"},
-                {name = odds, value = "ㅤ"},
-                {name = "Congrats! You won "..prize..":star:", value = "ㅤ"},
-            },
-            color = DISCORDIA.Color.fromRGB(170,26,232).value,
-            timestamp = DISCORDIA.Date():toISO('T','Z')
-        }
-    else
-        stars = stars - prize
-        botmsg:setEmbed{
-            title = msg.author.name.."'s Gamble",
-            fields = {
-                {name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"},
-                {name = "You rolled a...", value = "ㅤ"},
-                {name = odds, value = "ㅤ"},
-                {name = "Rip, you lost your "..prize..":star:s.", value = "ㅤ"},
-            },
-            color = DISCORDIA.Color.fromRGB(170,26,232).value,
-            timestamp = DISCORDIA.Date():toISO('T','Z')
-        }
-    end
+		-- (1,2,3,4,5)
+		local odds = math.random(1,5)
+		local botmsg = assert(msg:reply{
+			embed = gambleembed
+		})
+		
+		TIMER.setTimeout(1000, coroutine.wrap(function()
+			botmsg:setEmbed{
+				title = msg.author.name.."'s Gamble",
+				fields = {
+					{name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"},
+					{name = "You rolled a...", value = "ㅤ"},
+					{name = odds, value = "ㅤ"},
+				},
+				color = DISCORDIA.Color.fromRGB(170,26,232).value,
+				timestamp = DISCORDIA.Date():toISO('T','Z')
+			}
+		end))
+		
+		if odds % 2 == 0 then
+			stars = stars + prize
+			botmsg:setEmbed{
+				title = msg.author.name.."'s Gamble",
+				fields = {
+					{name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"},
+					{name = "You rolled a...", value = "ㅤ"},
+					{name = odds, value = "ㅤ"},
+					{name = "Congrats! You won "..prize..":star:", value = "ㅤ"},
+				},
+				color = DISCORDIA.Color.fromRGB(170,26,232).value,
+				timestamp = DISCORDIA.Date():toISO('T','Z')
+			}
+		else
+			stars = stars - prize
+			botmsg:setEmbed{
+				title = msg.author.name.."'s Gamble",
+				fields = {
+					{name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"},
+					{name = "You rolled a...", value = "ㅤ"},
+					{name = odds, value = "ㅤ"},
+					{name = "Rip, you lost your "..prize..":star:s.", value = "ㅤ"},
+				},
+				color = DISCORDIA.Color.fromRGB(170,26,232).value,
+				timestamp = DISCORDIA.Date():toISO('T','Z')
+			}
+		end
     end
 end)

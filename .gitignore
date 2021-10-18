@@ -1,4 +1,5 @@
-config.lua
-db.sqlite3
-discordia.log
-gateway.json
+/config.lua
+/db.sqlite3
+/grape.db
+/discordia.log
+/gateway.json
