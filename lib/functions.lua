@@ -1,7 +1,7 @@
 local functions = {}
 -- place to store useful global functions that don't really have a category.
 
-functions.function print_table(node)
+function functions.print_table(node)
     local cache, stack, output = {},{},{}
     local depth = 1
     local output_str = "{\n"
