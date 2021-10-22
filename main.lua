@@ -12,6 +12,7 @@ _G.DISCORDIA = discordia
 _G.CLIENT = discordia.Client()
 _G.CONFIG = require("./config.lua")
 _G.MUSIC = require("./lib/music.lua")
+_G.FUNCTIONS = require("./lib/functions.lua")
 
 -- not used
 function math.round(x)
