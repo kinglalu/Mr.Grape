@@ -104,11 +104,10 @@ function command.Cooldown(message, id, time, response)
 
 	local cmds = command.cooling[id]
 	local cooldown = false;
-
+	local now = os.clock()
+	
 	if cmds[id] ~= nil then
 		local expires = cmds[id]
-		
-		local now = os.time()
 		
 		if expires < now then
 			cmds[id] = nil
@@ -116,7 +115,7 @@ function command.Cooldown(message, id, time, response)
 			cooldown = expires - now
 		end
 	else
-		cmds[id] = os.time() + time
+		cmds[id] = now + time
 	end
 
 	if cooldown == false then return false end
