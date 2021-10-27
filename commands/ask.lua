@@ -1,11 +1,14 @@
 command.Register("ask", "Ask a question that Mr grape may be able to answer! Uses wolfram alpha.","fun",function(msg, args)
-    local question = msg.content:gsub(PREFIX .. "ask ", ""):gsub("%s+", "+")
-    local res, data = CORO.request("GET", "https://api.wolframalpha.com/v2/query?appid="..CONFIG.wolfram.."&input="..question.."&format=plaintext&output=JSON")
+  local response = msg:reply("Give me a second...")
+  function askquestion()
+    local questionbasic = msg.content:gsub(PREFIX .. "ask ", "")
+    local question = FUNCTIONS.urlencode(questionbasic)
+    local usedURL = "https://api.wolframalpha.com/v2/query?appid="..CONFIG.wolfram.."&input="..question.."&format=plaintext&output=JSON"
+    local res, data = CORO.request("GET", usedURL)
     local result = JSON.parse(data)
-  -- print(FUNCTIONS.print_table(result))
-   local answer = result["queryresult"]["pods"][2]["subpods"][1].plaintext 
-  -- print(FUNCTIONS.print_table(result["queryresult"]["pods"]))
-    msg:reply({
+    
+    local answer = result["queryresult"]["pods"][2]["subpods"][1].plaintext
+    response:update({
         embed = {
           title = "Answer",
           description = "Question:\n"..msg.content:gsub(PREFIX .. "ask ", ""),
@@ -16,4 +19,11 @@ command.Register("ask", "Ask a question that Mr grape may be able to answer! Use
           timestamp = DISCORDIA.Date():toISO('T', 'Z')
         }
       })
+    end
+  
+    if pcall(askquestion) then
+      -- respond with answer
+  else
+      response:setContent("I didn't understand that question!")
+  end
 end)

@@ -79,7 +79,18 @@ function functions.print_table(node)
     return output_str
 end
 
-
+function functions.urlencode (str)
+    str = string.gsub (str, "([^0-9a-zA-Z !'()*._~-])", -- locale independent
+       function (c) return string.format ("%%%02X", string.byte(c)) end)
+    str = string.gsub (str, " ", "+")
+    return str
+ end
+ 
+ function functions.urldecode (str)
+    str = string.gsub (str, "+", " ")
+    str = string.gsub (str, "%%(%x%x)", function(h) return string.char(tonumber(h,16)) end)
+    return str
+ end
 
 
 
