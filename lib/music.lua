@@ -13,7 +13,7 @@ function tablelen(table)
     return count
 end  
 
--- This hurts my eyes please no
+
 local musicfunc = {}
 
 --[[
