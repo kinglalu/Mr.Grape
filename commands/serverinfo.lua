@@ -16,7 +16,7 @@ command.Register("serverinfo", "displays server info","utility",function(msg, ar
                   title = server.name.."'s server info",
                   thumbnail = {url = server.iconURL},
                   fields = {
-                    {name = "Server Owner", value = server.owner.mentionString, inline = true},
+                    {name = "Server Owner", value = "<@"..server.ownerId..">", inline = true},
                     {name = "ID", value = server.id, inline = true},
                     {name = "Member Count", value = server.totalMemberCount, inline = true},
                     {name = "Creation Date", value = DISCORDIA.Date().fromSnowflake(server.id):toISO(' ', ''), inline = true},
