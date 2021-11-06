@@ -61,7 +61,7 @@ command.Register('items', 'See your items', 'economy', function(msg, args)
     }
 end)
 
-command.Register('add-debug-item', 'See your items', 'economy', function(msg, args)
+command.Register('debug-add-apples', 'See your items', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author.id)
 	local items = DB.GetUserItems(id)
 	
@@ -71,5 +71,27 @@ command.Register('add-debug-item', 'See your items', 'economy', function(msg, ar
 	
 	DB.SetUserItems(id, items)
 	
-	msg:reply('Ok')
+	msg:reply('Ok.')
+end)
+
+command.Register('debug-erase-apples', 'See your items', 'economy', function(msg, args)
+	local id = DB.CreateRowUser(msg.author.id)
+	local items = DB.GetUserItems(id)
+	
+	items.Apple = nil
+	
+	DB.SetUserItems(id, items)
+	
+	msg:reply('Ok.')
+end)
+
+command.Register('debug-test-apples', 'See your items', 'economy', function(msg, args)
+	local id = DB.CreateRowUser(msg.author.id)
+	local items = DB.GetUserItems(id)
+	
+	if items.Apple then
+		msg:reply('You have ' .. items.Apple.quantity .. ' apples')
+	else
+		msg:reply('You have no apples,')
+	end
 end)
