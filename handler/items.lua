@@ -11,8 +11,41 @@ TABLE Items
 
 DB.KnownItems = {
 	Apple = {
-		Emoji = ":apple:"
+		Emoji = ":apple:",
+		description = "test apple",
+		price = 0
+	},
+	Fan = {
+		Emoji = ":fan:",
+		description = "Reduces cooldowns of some commands.",
+		price = 100
+	},
+	Orangedetector = {
+		Emoji = ":tangerine:",
+		description = "Increases the chance you find an orange in the orange job.",
+		price = 100
+	},
+	Mangodetector = {
+		Emoji = ":mango:",
+		description = "Increases the chance you find a mango in the mango job.",
+		price = 100
+	},
+	Carrotdetector = {
+		Emoji = ":carrot:",
+		description = "Increases the chance you find a carrot in the carrot job.",
+		price = 100
+	},
+	Starmagnet = {
+		Emoji = ":magnet:",
+		description = "Increases the amount of :star:s gained per job.",
+		price = 150
+	},
+	Shovel = {
+		Emoji = ":shovel:",
+		description = "Gives you more stars for digging job.",
+		price = 175
 	}
+
 }
 
 -- ID from CreateUserRow
