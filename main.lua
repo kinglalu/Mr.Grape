@@ -1,7 +1,6 @@
 local discordia = require("discordia")
 discordia.extensions()
 _G.fs = require("fs")
-local sql = require("sqlite3")
 _G.path = require("path")
 _G.CORO = require("coro-http")
 _G.SPAWN = require("coro-spawn")
@@ -38,7 +37,6 @@ local function setGame()
 end
 
 _G.CLIENT:on("ready", function()
-	-- local conn = sql.open("db.sqlite3")
 	print("Ready!")
 	setGame()
 end)
