@@ -21,12 +21,8 @@ function DB.GetUserItems(id)
 	local items = JSON.parse(db_items)
 	
 	for i,v in pairs(items) do
-		if not KnownItems[i] then
+		if not KnownItems[i] or not v.quantity or v.quantity == 0 then
 			Items[i] = nil
-		end
-		
-		if not v.quantity then
-			v.quantity = 0
 		end
 	end
 	
@@ -92,6 +88,17 @@ command.Register('debug-test-apples', 'See your items', 'economy', function(msg,
 	if items.Apple then
 		msg:reply('You have ' .. items.Apple.quantity .. ' apples')
 	else
-		msg:reply('You have no apples,')
+		msg:reply('You have no apples.')
+	end
+end)
+
+command.Register('debug-have-apples', 'See your items', 'economy', function(msg, args)
+	local id = DB.CreateRowUser(msg.author.id)
+	local items = DB.GetUserItems(id)
+	
+	if not items.Apple then
+		msg:reply('You have no apples.')
+	else
+		msg:reply('You have apples.')
 	end
 end)
