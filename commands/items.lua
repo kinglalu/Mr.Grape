@@ -1,4 +1,4 @@
-local DB = require('../DB')
+local DB = require('../db')
 
 --[[
 TABLE Items
@@ -44,26 +44,25 @@ end
 command.Register('items', 'See your items', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author.id)
 	local items = DB.GetUserItems(id)
+	local embed = {
+		title = "Items",
+		fields = {},
+		color = DISCORDIA.Color.fromRGB(170,26,232).value,
+        timestamp = DISCORDIA.Date():toISO('T', 'Z')
+	}
 	
-	msg:reply {
-        embed = {
-            title = msg.author.name .. "'s Items",
-            fields = {
-                {name = "You have items", value=JSON.stringify(items)}
-            },
-            color = DISCORDIA.Color.fromRGB(170,26,232).value,
-            timestamp = DISCORDIA.Date():toISO('T', 'Z')
-        }
-    }
+	for i,v in pairs(items) do
+		table.insert(embed.fields, {name=i..'(s)',value=v.quantity})
+	end
+	assert(msg:reply{embed = embed})
+	
 end)
 
 command.Register('debug-add-apples', 'See your items', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author.id)
 	local items = DB.GetUserItems(id)
 	
-	items.Apple = {
-		quantity = 5
-	}
+	items.Apple.quantity = items.Apple.quantity + 5
 	
 	DB.SetUserItems(id, items)
 	
@@ -86,7 +85,7 @@ command.Register('debug-test-apples', 'See your items', 'economy', function(msg,
 	local items = DB.GetUserItems(id)
 	
 	if items.Apple then
-		msg:reply('You have ' .. items.Apple.quantity .. ' apples')
+		msg:reply('You have '..items.Apple.quantity ..' apples')
 	else
 		msg:reply('You have no apples.')
 	end
@@ -99,6 +98,6 @@ command.Register('debug-have-apples', 'See your items', 'economy', function(msg,
 	if not items.Apple then
 		msg:reply('You have no apples.')
 	else
-		msg:reply('You have apples.')
+		msg:reply('You have'..items.Apple.quantity..' apples.')
 	end
 end)
