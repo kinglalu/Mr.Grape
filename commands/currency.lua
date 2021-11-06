@@ -1,13 +1,4 @@
---[[
-    https://github.com/stepelu/lua-ljsqlite3
-    https://scilua.org/ljsqlite3.html
-    
-    Considerations:
-    
-    sqlite int Minimum is -(263) == -9223372036854775808 and maximum is 263 - 1 == 9223372036854775807
-]]
-
-local DB = require('../db.lua')
+local DB = require('../handler/economy.lua')
 
 local jobs = {
     'Will you help me find my orange?\nIt fell in a bush full of bananas over there, but I could not find it.\nPlease go there and find my orange.',
@@ -36,11 +27,11 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
         local earned = math.random(5,10)
 		
         local id = DB.CreateRowUser(msg.author.id)
-        local stars = DB.db:rowexec('SELECT stars FROM users WHERE id = "' .. id .. '"')
+        local stars = DB.GetUserStars(id)
         stars = stars + earned
 		
         -- Save changes
-        DB.db:exec('UPDATE users SET stars = ' .. DB.LongString(stars) .. ' WHERE id = "' .. id .. '"')
+        DB.SetUserStars(id, stars)
 		
 		msg:reply({
             embed = {
@@ -72,7 +63,7 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
 
 command.Register("bal", "See your balance of :star:", "economy", function(msg, args)
     local id = DB.CreateRowUser(msg.author.id)
-    local stars = DB.db:rowexec('SELECT stars FROM users WHERE id = "' .. id .. '"')
+    local stars = DB.GetUserStars(id)
     msg:reply {
         embed = {
             title = msg.author.name .. "'s Balance",
@@ -94,7 +85,7 @@ command.Register("gamble", "Gamble your stars away and hope your lucky", "econom
 	-- if stars_changing then return msg:reply("Your star balance is currently changing.") end
 	local prize = tonumber(args[1])
 	local win = false
-	local stars = DB.db:rowexec('SELECT stars FROM users WHERE id = "' .. id .. '"')
+	local stars = DB.GetUserStars(id)
 	local gambleembed = {
 		title = msg.author.name.."'s Gamble",
 		fields = {
@@ -125,7 +116,7 @@ command.Register("gamble", "Gamble your stars away and hope your lucky", "econom
 		end
 		
         -- Save changes
-        DB.db:exec('UPDATE users SET stars = ' .. DB.LongString(stars) .. ' WHERE id = "' .. id .. '"')
+        DB.SetUserStars(id, stars)
 		
 		TIMER.setTimeout(2000, coroutine.wrap(function()
 			botmsg:setEmbed(gambleembed)

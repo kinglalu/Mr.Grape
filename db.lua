@@ -1,3 +1,13 @@
+--[[
+    https://github.com/stepelu/lua-ljsqlite3
+    https://scilua.org/ljsqlite3.html
+    
+    Considerations:
+    
+    sqlite int Minimum is -(263) == -9223372036854775808 and maximum is 263 - 1 == 9223372036854775807
+]]
+
+
 local exports = {}
 
 local sql = require("sqlite3")

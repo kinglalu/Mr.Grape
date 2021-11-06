@@ -97,7 +97,7 @@ end)
 command.cooling = {}
 
 -- Boolean; Returns true if the command is on cooldown for the message sender, false if they arent
-function command.Cooldown(message, id, time, response)
+function command.Cooldown(message, cid, time, response)
 	local id = tostring(message.author.id)
 	
 	if command.cooling[id] == nil then command.cooling[id] = {} end
@@ -106,16 +106,16 @@ function command.Cooldown(message, id, time, response)
 	local cooldown = false;
 	local now = os.clock()
 	
-	if cmds[id] ~= nil then
-		local expires = cmds[id]
+	if cmds[cid] ~= nil then
+		local expires = cmds[cid]
 		
 		if expires < now then
-			cmds[id] = nil
+			cmds[cid] = nil
 		else 
 			cooldown = expires - now
 		end
 	else
-		cmds[id] = now + time
+		cmds[cid] = now + time
 	end
 
 	if cooldown == false then return false end
