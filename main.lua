@@ -13,7 +13,7 @@ _G.CONFIG = require("./config.lua")
 _G.MUSIC = require("./lib/music.lua")
 _G.FUNCTIONS = require("./lib/functions.lua")
 
--- not used
+-- used
 function math.round(x)
 	local decimal = x - math.floor(x)
 

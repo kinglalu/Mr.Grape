@@ -104,7 +104,7 @@ function command.Cooldown(message, cid, time, response)
 
 	local cmds = command.cooling[id]
 	local cooldown = false;
-	local now = os.clock()
+	local now = os.time() + (os.clock() / 10)
 	
 	if cmds[cid] ~= nil then
 		local expires = cmds[cid]
@@ -122,7 +122,7 @@ function command.Cooldown(message, cid, time, response)
 
 	if response == nil then response = "You need to wait  %s seconds to run this command again." end
 
-	message:reply(response:gsub('%%s', cooldown))
+	message:reply(response:gsub('%%s', math.round(cooldown)))
 	
 	return true
 end
