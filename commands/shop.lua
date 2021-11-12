@@ -10,7 +10,7 @@ command.Register("shop", "Displays the shop for items you can buy with :star:", 
     }
     
     for i,v in pairs(items) do
-		table.insert(embed.fields, {name=i,value=v.description..'\n'..v.price..':star:'})
+		table.insert(embed.fields, {name=v.Emoji..i,value=v.description..'\n'..v.price..':star:'})
     end
     assert(msg:reply{embed = embed})
 end)

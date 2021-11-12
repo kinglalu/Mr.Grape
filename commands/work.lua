@@ -18,18 +18,31 @@ local fails = {
 }
 
 command.Register("work", "Your basic way of getting stars", "economy", function(msg, args)
-    if command.Cooldown(msg, "payday", 30, "You're working too fast, slow down! Wait **%s** seconds before working again.") then return end
+    local id = DB.CreateRowUser(msg.author.id)
+    local items = DB.GetUserItems(id)
+    local stars = DB.GetUserStars(id)
+    local cooldowntotal = 30
+    if not items.fan  then
+        cooldowntotal = 30
+    else 
+        cooldowntotal = cooldowntotal - items.fan.quantity
+        if cooldowntotal < 1 then
+            cooldowntotal = 1
+        end
+    end
+    if command.Cooldown(msg, "payday", cooldowntotal, "You're working too fast, slow down! Wait **%s** seconds before working again.") then return end
     local successrate  = math.random(1,100)
     local jobid = math.random(1, #jobs)
     local job = jobs[jobid]
     if successrate <= 60 then
         local response = responses[jobid]
         local earned = math.random(5,10)
-		
-        local id = DB.CreateRowUser(msg.author.id)
-        local stars = DB.GetUserStars(id)
+		if not items.starmagnet then
         stars = stars + earned
-		
+        else
+        earned = earned + items.starmagnet.quantity
+        stars = stars + earned
+        end
         -- Save changes
         DB.SetUserStars(id, stars)
 		

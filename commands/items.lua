@@ -17,7 +17,7 @@ command.Register('items', 'See your items', 'economy', function(msg, args)
 	
 end)
 
-command.Register('debug-add-apples', 'See your items', 'economy', function(msg, args)
+command.Register('debug-add-apples', 'debug command', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author.id)
 	local items = DB.GetUserItems(id)
 	
@@ -28,18 +28,18 @@ command.Register('debug-add-apples', 'See your items', 'economy', function(msg, 
 	msg:reply('Ok.')
 end)
 
-command.Register('debug-erase-apples', 'See your items', 'economy', function(msg, args)
+command.Register('debug-erase-apples', 'debug command', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author.id)
 	local items = DB.GetUserItems(id)
-	
-	items.Apple = nil
+
+	items.fan = nil
 	
 	DB.SetUserItems(id, items)
 	
 	msg:reply('Ok.')
 end)
 
-command.Register('debug-test-apples', 'See your items', 'economy', function(msg, args)
+command.Register('debug-test-apples', 'debug command', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author.id)
 	local items = DB.GetUserItems(id)
 	
@@ -50,7 +50,7 @@ command.Register('debug-test-apples', 'See your items', 'economy', function(msg,
 	end
 end)
 
-command.Register('debug-have-apples', 'See your items', 'economy', function(msg, args)
+command.Register('debug-have-apples', 'debug command', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author.id)
 	local items = DB.GetUserItems(id)
 	

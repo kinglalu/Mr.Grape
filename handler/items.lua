@@ -11,37 +11,37 @@ TABLE Items
 
 DB.KnownItems = {
 	apple = {
-		Emoji = ":apple:",
+		Emoji = ":apple: ",
 		description = "test apple",
 		price = 3
 	},
 	fan = {
-		Emoji = ":fan:",
+		Emoji = "<:fan:908145885676986398> ",
 		description = "Reduces cooldowns of some commands.",
 		price = 100
 	},
 	orangedetector = {
-		Emoji = ":tangerine:",
+		Emoji = ":tangerine: ",
 		description = "Increases the chance you find an orange in the orange job.",
 		price = 100
 	},
 	mangodetector = {
-		Emoji = ":mango:",
+		Emoji = ":mango: ",
 		description = "Increases the chance you find a mango in the mango job.",
 		price = 100
 	},
 	carrotdetector = {
-		Emoji = ":carrot:",
+		Emoji = ":carrot: ",
 		description = "Increases the chance you find a carrot in the carrot job.",
 		price = 100
 	},
 	starmagnet = {
-		Emoji = ":magnet:",
+		Emoji = ":magnet: ",
 		description = "Increases the amount of :star:s gained per job.",
 		price = 150
 	},
 	shovel = {
-		Emoji = ":shovel:",
+		Emoji = "<:shovel:908207500942258176> ",
 		description = "Gives you more stars for digging job.",
 		price = 175
 	}
