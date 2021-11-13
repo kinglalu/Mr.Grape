@@ -28,7 +28,7 @@ command.Register("serverinfo", "displays server info","utility",function(msg, ar
                     {name = "Number Of Users boosting", value = server.premiumSubscriptionCount, inline = true},
                     {name = "Server Region", value = server.region, inline = true},
                   },
-                color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+                color = EMBEDCOLOR,
                 timestamp = DISCORDIA.Date():toISO('T', 'Z')
                 }     
       })

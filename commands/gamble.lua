@@ -12,7 +12,7 @@ command.Register("gamble", "Gamble your stars away and hope your lucky", "econom
 		fields = {
 			{name = "Ok, if you roll an even number you win, if you roll an odd number, you lose.", value = "ㅤ"}, 
 		},
-		color = DISCORDIA.Color.fromRGB(170,26,232).value,
+		color = EMBEDCOLOR,
 		timestamp = DISCORDIA.Date():toISO('T', 'Z')
 	}
 	

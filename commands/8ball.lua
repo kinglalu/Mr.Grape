@@ -30,7 +30,7 @@ command.Register("8ball", "Have Mr Grape give some advice!","fun",function(msg, 
         fields = {
           {name = "Answer:", value = response }
         },
-        color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+        color = EMBEDCOLOR,
         timestamp = DISCORDIA.Date():toISO('T', 'Z')
       }
     })

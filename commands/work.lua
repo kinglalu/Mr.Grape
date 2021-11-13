@@ -54,7 +54,7 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
                     {name = tostring(response), value = "Heres " .. earned .. " :star:"},
                     {name = "Your balance is now:", value = DB.LongString(stars) .. " :star:"},
                 },
-                color = DISCORDIA.Color.fromRGB(170,26,232).value,
+                color = EMBEDCOLOR,
                 timestamp = DISCORDIA.Date():toISO('T', 'Z')
             }
         })
@@ -67,7 +67,7 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
                 fields = {
                     {name = tostring(response), value = "Please try again later!"},
                 },
-                color = DISCORDIA.Color.fromRGB(170,26,232).value,
+                color = EMBEDCOLOR,
                 timestamp = DISCORDIA.Date():toISO('T', 'Z')
             }
         }))

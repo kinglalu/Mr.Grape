@@ -15,7 +15,7 @@ command.Register("ask", "Ask a question that Mr grape may be able to answer! Use
           fields = {
             {name = "Answer:", value = answer }
           },
-          color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+          color = EMBEDCOLOR,
           timestamp = DISCORDIA.Date():toISO('T', 'Z')
         }
       })

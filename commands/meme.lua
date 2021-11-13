@@ -22,7 +22,7 @@ command.Register("meme", "Uses Reddit to get a random meme from a variety of sub
               title = imgtitle,
               url = "https://www.reddit.com"..image.permalink,
               image = {url =  imgurl},
-              color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+              color = EMBEDCOLOR,
               timestamp = DISCORDIA.Date():toISO('T', 'Z')
               }
           })

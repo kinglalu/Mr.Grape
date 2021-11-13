@@ -4,7 +4,7 @@ command.Register("dice", "Roll a dice!","fun",function(msg, args)
         embed = {
             title = "🎲 Dice Roll",
             description = "Your roll landed on...   ".."**"..flip.."**".." !",
-            color = DISCORDIA.Color.fromRGB(170,26,232).value,
+            color = EMBEDCOLOR,
             timestamp = DISCORDIA.Date():toISO('T', 'Z')
           }
     }

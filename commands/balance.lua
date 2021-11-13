@@ -9,7 +9,7 @@ command.Register("bal", "See your balance of :star:", "economy", function(msg, a
             fields = {
                 {name = "You have:", value = DB.LongString(stars) .. " :star:"}
             },
-            color = DISCORDIA.Color.fromRGB(170,26,232).value,
+            color = EMBEDCOLOR,
             timestamp = DISCORDIA.Date():toISO('T', 'Z')
         }
     }

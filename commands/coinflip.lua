@@ -11,7 +11,7 @@ command.Register("coinflip", "Flip a coin for all those tough decisions!","fun",
         embed = {
             title = ":coin: CoinFlip",
             description = "Your coin landed on...   ".."**"..result.."**".." !",
-            color = DISCORDIA.Color.fromRGB(170,26,232).value,
+            color = EMBEDCOLOR,
             timestamp = DISCORDIA.Date():toISO('T', 'Z')
           }
     }

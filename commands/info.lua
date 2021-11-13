@@ -33,7 +33,7 @@ command.Register("info", "Gives you info about Mr Grape!", "utility", function(m
                 {name = "Credits:", value = "Kinglalu, Divide, Linuxterm\n JS version by DAONE\n Emojis by Goobermeister\n Original bot by Horsey4 & Airplane Bong"},
                 {name = "Number of servers:", value = #CLIENT.guilds},
             },
-            color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+            color = EMBEDCOLOR,
             timestamp = DISCORDIA.Date():toISO('T','Z')
         }
     }

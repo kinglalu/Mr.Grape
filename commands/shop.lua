@@ -5,7 +5,7 @@ command.Register("shop", "Displays the shop for items you can buy with :star:", 
         title = "Shop",
         description = "`Buy an item by using "..PREFIX.."buy <itemname>!`",
 		fields = {},
-		color = DISCORDIA.Color.fromRGB(170,26,232).value,
+		color = EMBEDCOLOR,
         timestamp = DISCORDIA.Date():toISO('T', 'Z')
     }
     

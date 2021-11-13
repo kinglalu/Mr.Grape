@@ -6,7 +6,7 @@ command.Register('items', 'See your items', 'economy', function(msg, args)
 	local embed = {
 		title = "Items",
 		fields = {},
-		color = DISCORDIA.Color.fromRGB(170,26,232).value,
+		color = EMBEDCOLOR,
         timestamp = DISCORDIA.Date():toISO('T', 'Z')
 	}
 	

@@ -18,7 +18,7 @@ command.Register("queue", "See the queue of the music playing!", "music", functi
 				footer = {
 					text = "1 of 1",
 				},
-				color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+				color = EMBEDCOLOR,
 				timestamp = DISCORDIA.Date():toISO('T', 'Z')
 			}
 		})

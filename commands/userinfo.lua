@@ -14,7 +14,7 @@ command.Register("userinfo", "Get info about a user","utility",function(msg, arg
         {name = 'Joined Server', value = person.joinedAt and person.joinedAt:gsub('%..*', ''):gsub('T', ' '), inline = true},
         {name = 'Joined Discord', value = DISCORDIA.Date.fromSnowflake(person.id):toISO(' ', ''), inline = true},
       },
-      color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+      color = EMBEDCOLOR,
       timestamp = DISCORDIA.Date():toISO('T', 'Z')
     }
   })

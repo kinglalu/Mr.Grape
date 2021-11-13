@@ -10,7 +10,7 @@ command.Register("avatar", "Get a user's avatar","utility",function(msg, args)
           {name = 'ㅤ', value = '[JPG]('..person:getAvatarURL(1024, 'jpg')..')', inline = true},
           {name = 'ㅤ', value = '[WEBP]('..person:getAvatarURL(1024, 'webp')..')', inline = true},
         },
-      color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+      color = EMBEDCOLOR,
       timestamp = DISCORDIA.Date():toISO('T', 'Z')
       }
   })

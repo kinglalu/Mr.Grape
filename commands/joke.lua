@@ -10,7 +10,7 @@ command.Register("joke", "Get a random joke!","fun",function(msg, args)
           fields = {
             {name = "ㅤ", value = joke["delivery"] }
           },
-          color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+          color = EMBEDCOLOR,
           timestamp = DISCORDIA.Date():toISO('T', 'Z')
         }
       })

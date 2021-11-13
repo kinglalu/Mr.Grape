@@ -6,7 +6,7 @@ command.Register("apod", "Sends Nasa's pic of the day","fun",function(msg, args)
           title = "NASA's Picture of the Day!",
           description = image["explanation"],
           image = {url =  image["hdurl"]},
-          color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+          color = EMBEDCOLOR,
           timestamp = DISCORDIA.Date():toISO('T', 'Z')
           }
       })

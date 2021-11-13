@@ -6,7 +6,7 @@ command.Register("dog", "Get a random dog image!","fun",function(msg, args)
         embed = {
           title = ":dog: Woof!",
           image = {url =  image[1]["url"]},
-          color = DISCORDIA.Color.fromRGB(170, 26, 232).value,
+          color = EMBEDCOLOR,
           timestamp = DISCORDIA.Date():toISO('T', 'Z')
           }
       })
