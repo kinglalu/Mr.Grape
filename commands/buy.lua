@@ -2,7 +2,7 @@ command.Register("buy", "Purchase an item from the shop with :star:", "economy",
     local DB = require('../handler/items.lua')
     local starDB = require('../handler/economy.lua')
     local shopitems = DB.KnownItems
-    local id = DB.CreateRowUser(msg.author.id)
+    local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
     local stars = starDB.GetUserStars(id)
     local purchase = string.lower(tostring(args[1]))

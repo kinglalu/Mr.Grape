@@ -18,7 +18,7 @@ local fails = {
 }
 
 command.Register("work", "Your basic way of getting stars", "economy", function(msg, args)
-    local id = DB.CreateRowUser(msg.author.id)
+    local id = DB.CreateRowUser(msg.author)
     local items = DB.GetUserItems(id)
     local stars = DB.GetUserStars(id)
     local cooldowntotal = 30

@@ -1,7 +1,7 @@
 local DB = require('../handler/items.lua')
 
 command.Register('items', 'See your items', 'economy', function(msg, args)
-	local id = DB.CreateRowUser(msg.author.id)
+	local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
 	local embed = {
 		title = "Items",
@@ -18,7 +18,7 @@ command.Register('items', 'See your items', 'economy', function(msg, args)
 end)
 
 command.Register('debug-add-apples', 'debug command', 'economy', function(msg, args)
-	local id = DB.CreateRowUser(msg.author.id)
+	local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
 	
 	items.Apple.quantity = items.Apple.quantity + 5
@@ -29,7 +29,7 @@ command.Register('debug-add-apples', 'debug command', 'economy', function(msg, a
 end)
 
 command.Register('debug-erase-apples', 'debug command', 'economy', function(msg, args)
-	local id = DB.CreateRowUser(msg.author.id)
+	local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
 
 	items.fan = nil
@@ -40,7 +40,7 @@ command.Register('debug-erase-apples', 'debug command', 'economy', function(msg,
 end)
 
 command.Register('debug-test-apples', 'debug command', 'economy', function(msg, args)
-	local id = DB.CreateRowUser(msg.author.id)
+	local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
 	
 	if items.Apple then
@@ -51,7 +51,7 @@ command.Register('debug-test-apples', 'debug command', 'economy', function(msg, 
 end)
 
 command.Register('debug-have-apples', 'debug command', 'economy', function(msg, args)
-	local id = DB.CreateRowUser(msg.author.id)
+	local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
 	
 	if not items.Apple then

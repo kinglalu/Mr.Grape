@@ -1,7 +1,7 @@
 local DB = require('../handler/economy.lua')
 
 command.Register("bal", "See your balance of :star:", "economy", function(msg, args)
-    local id = DB.CreateRowUser(msg.author.id)
+    local id = DB.CreateRowUser(msg.author)
     local stars = DB.GetUserStars(id)
     msg:reply {
         embed = {

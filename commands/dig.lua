@@ -1,7 +1,7 @@
 local DB = require('../handler/economy.lua')
 
 command.Register("dig", "dig for :star:", "economy", function(msg, args)
-    local id = DB.CreateRowUser(msg.author.id)
+    local id = DB.CreateRowUser(msg.author)
     local items = DB.GetUserItems(id)
     local stars = DB.GetUserStars(id)
     local cooldowntotal = 30
