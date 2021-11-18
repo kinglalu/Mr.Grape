@@ -13,7 +13,7 @@ command.Register("leaderboard", "leaderboard", "economy", function(msg,args)
 		
 		if step then
 			local id, tag, stars = unpack(step)
-			list = '**' .. (i+1) .. ')** ' .. list .. '<@' .. id .. '> (' .. tag .. '): ' .. DB.LongString(stars) .. ' :star:'
+			list = list .. '**' .. (i + 1) .. ')** ' .. tag .. ': ' .. DB.LongString(stars) .. ' :star:\n'
 		end
 	end
 	
