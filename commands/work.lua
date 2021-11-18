@@ -38,29 +38,34 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
     local jobid = math.random(1, #jobs)
     local job = jobs[jobid]
     if jobid == 1 then
-         if not items.orangedetector then return nil end
-         
+         if not items.orangedetector then 
+            print("no detector")
+        else
         local reductionO = items.orangedetector.quantity*2
         successrate = math.random(1,100-reductionO)
         if successrate < 0 then
             successrate = 1
         end
+    end
      elseif jobid == 2 then
-        if not items.mangodetector then return end
-       
-        
+        if not items.mangodetector then 
+            print("no detector")
+        else
         local reductionM = items.mangodetector.quantity*2
         successrate = math.random(1,100-reductionM)
         if successrate < 0 then
             successrate = 1
         end
+        end
     elseif jobid == 3 then
-        if not items.carrotdetector then return end
-            
+        if not items.carrotdetector then 
+            print("no detector")
+        else
         local reductionC = items.carrotdetector.quantity*2
         successrate = math.random(1,100-reductionC)
         if successrate < 0 then
             successrate = 1
+        end
         end
     end
 
