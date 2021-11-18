@@ -22,6 +22,7 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
     local items = DB.GetUserItems(id)
     local stars = DB.GetUserStars(id)
     local cooldowntotal = 30
+    
     if not items.fan  then
         cooldowntotal = 30
     else 
@@ -30,19 +31,50 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
             cooldowntotal = 1
         end
     end
+    
     if command.Cooldown(msg, "payday", cooldowntotal, "You're working too fast, slow down! Wait **%s** seconds before working again.") then return end
+    
     local successrate  = math.random(1,100)
     local jobid = math.random(1, #jobs)
     local job = jobs[jobid]
+    if jobid == 1 then
+         if not items.orangedetector then return nil end
+         
+        local reductionO = items.orangedetector.quantity*2
+        successrate = math.random(1,100-reductionO)
+        if successrate < 0 then
+            successrate = 1
+        end
+     elseif jobid == 2 then
+        if not items.mangodetector then return end
+       
+        
+        local reductionM = items.mangodetector.quantity*2
+        successrate = math.random(1,100-reductionM)
+        if successrate < 0 then
+            successrate = 1
+        end
+    elseif jobid == 3 then
+        if not items.carrotdetector then return end
+            
+        local reductionC = items.carrotdetector.quantity*2
+        successrate = math.random(1,100-reductionC)
+        if successrate < 0 then
+            successrate = 1
+        end
+    end
+
     if successrate <= 60 then
         local response = responses[jobid]
         local earned = math.random(5,10)
 		if not items.starmagnet then
-        stars = stars + earned
+            stars = stars + earned
         else
-        earned = earned + items.starmagnet.quantity
-        stars = stars + earned
+            earned = earned + items.starmagnet.quantity
+            stars = stars + earned
         end
+    
+
         -- Save changes
         DB.SetUserStars(id, stars)
 		

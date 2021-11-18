@@ -11,8 +11,8 @@ command.Register("help", "Display's info about all the commands.","utility",func
 			embed = {
 				title = "Mr Grape's Commands",
 				fields = {
-                {name = "Categories", value = "Economy\nUtility\nFun\nModeration\nMusic", inline = true},
-                {name = "Use +help <category> to see each category's commands", value = "ㅤ", inline = false},
+                    {name = "Categories", value = "Economy\nUtility\nFun\nModeration\nMusic", inline = true},
+                    {name = "Use +help <category> to see each category's commands", value = "ㅤ", inline = false},
 				},
 				color = EMBEDCOLOR,
 				timestamp = DISCORDIA.Date():toISO('T', 'Z')
@@ -20,7 +20,7 @@ command.Register("help", "Display's info about all the commands.","utility",func
         })
         return nil
 	elseif #args == 1 then
-		for index,value in pairs(command.commands) do
+		for index, value in pairs(command.commands) do
 			if value["category"] == args[1]:lower() then
 				table.insert(embed["fields"], {
 					name = index,
