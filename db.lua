@@ -41,8 +41,27 @@ function exports.CreateRowUser(user)
 
 	-- Create row
     if exists == 0 then
-        db('INSERT INTO users (id, tag, stars, items, ores, stars_changing) VALUES ("' .. id .. '", 0, "{}", "{}", 0)')
-    end
+		local stmt = db:prepare[[
+			INSERT INTO users (id, tag, stars, items, ores, stars_changing) VALUES (?, ?, 0, "{}", "{}", 0)
+		]]
+		
+		stmt:bind(id, user.tag)
+		stmt:step()
+		stmt:close()
+    else
+		local tag = db:rowexec('SELECT tag, id FROM users WHERE id = "' .. id .. '"')
+		
+		if tag ~= user.tag then
+			-- tag outdated
+			local stmt = db:prepare[[
+				UPDATE users SET tag = ? WHERE id = ?
+			]]
+			
+			stmt:bind(user.tag, id)
+			stmt:step()
+			stmt:close()
+		end
+	end
 	
 	return id
 end

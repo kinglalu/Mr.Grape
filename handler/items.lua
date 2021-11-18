@@ -70,6 +70,7 @@ function DB.SetUserItems(id, items)
 	
 	stmt:bind(JSON.stringify(items), id)
 	stmt:step()
+	stmt:close()
 	
 	return items
 end
