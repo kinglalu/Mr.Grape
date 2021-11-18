@@ -23,6 +23,7 @@ command.Register("leaderboard", "leaderboard", "economy", function(msg,args)
 		embed = {
 			title = 'Leaderboard',
 			description = list:sub(0, 512),
+			color = EMBEDCOLOR,
 		},
 	}
 end)
