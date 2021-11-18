@@ -1,16 +1,8 @@
 local timer = require('timer')
 -- Replace url.lua with this
-local parse = require("url").parse
-
--- TODO: Move this to table.lua
-function tableLen(table)
-    local count = 0
-    for _ in pairs(table) do count = count + 1 end
-    return count
-end  
-
-
 local musiclib = {}
+local parse = require("url").parse
+local json = require("json")
 
 --[[
 
@@ -29,8 +21,8 @@ Music Queue
 --]]
 
 local conn
--- Might not want to do it this way
 local botVoiceChannelId
+local isPaused
 
 -- Library
 
@@ -45,37 +37,54 @@ end)
 musiclib.queue = {}
 
 function musiclib.play(query, msg)
-    print("Requested " .. query)
-
     args = {}
-    if (parse(query).hostname == "youtube.com") then
-        args = { "-g", query }
+    if parse(query).hostname == "youtube.com" then
+        args = { "--dump-json", "--clean-infojson", query }
     else
-        args = { "-g", "ytsearch:\"" .. query .. "\"" }
+        args = { "--dump-json", "--clean-infojson", "ytsearch:\"" .. query .. "\"" }
     end
-    print(FUNCTIONS.print_table(args))
+
     local process = require("coro-spawn")("yt-dlp", {
         args = args,
         stdio = { nil, true, 2 }
     })
+    
+    for output in process.stdout.read do
+        musiclib.json = json.parse(output)
+    end
+    --print(musiclib.queueAdd(musiclib.json.title, musiclib.json.formats))
+    --musiclib.queueAdd(musiclib.json.title, musiclib.json.formats[1].url)
+    conn = msg.member.voiceChannel:join()
+    --msg:reply("Now playing "..musiclib.json.title)
+    assert(msg:reply({
+        embed = {
+          title = "Now Playing",
+          thumbnail = {url =  musiclib.json.thumbnails[41].url},
+          description = '**['..musiclib.json.title..']'..'('..musiclib.json.webpage_url..')**',
+          color = EMBEDCOLOR,
+          timestamp = DISCORDIA.Date():toISO('T', 'Z')
+          }
+      }))
+    conn:playFFmpeg(musiclib.json.formats[1].url)
+end
 
-    musiclib.joinVC(msg.member.voiceChannel)
-
-    for chunk in process.stdout.read do
-        print(chunk)
-        for _, ytURL in pairs(chunk:split('\n')) do
-            local mime = parse(ytURL, true).query.mime
-            if mime and mime:find("audio") == 1 then
-                musiclib.queueAdd(query, ytURL)
-                conn:playFFmpeg(ytURL)
-            end
-        end
+function musiclib.toggle(query, msg)
+    if isPaused then
+        conn:resumeStream()
+        isPaused = false
+    else
+        conn:pauseStream()
+        isPaused = true
     end
 end
 
-function musiclib.queueAdd(url, ytURL)
-    print(ytURL)
-    musiclib.queue[#musiclib.queue+1] = {url}
+function musiclib.queueAdd(title, url)
+    print(title)
+    print(url)
+    musiclib.queue[#musiclib.queue + 1] = {
+        title = query,
+        url = url
+    }
 end
 
 function musiclib.joinVC(voiceChannel)
