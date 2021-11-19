@@ -13,7 +13,7 @@ command.Register("leaderboard", "leaderboard", "economy", function(msg,args)
 		
 		if step then
 			local id, tag, stars = unpack(step)
-			list = list .. '**' .. (i + 1) .. ')** ' .. tag .. ': ' .. DB.LongString(stars) .. ' :star:\n'
+			list = list .. '**' .. (i + 1) .. ')** ' .. tag .. ': **' .. DB.LongString(stars) .. '** :star:\n'
 		end
 	end
 	
@@ -21,9 +21,10 @@ command.Register("leaderboard", "leaderboard", "economy", function(msg,args)
 	
 	msg:reply{
 		embed = {
-			title = 'Leaderboard',
+			title = ' Global Leaderboard',
 			description = list:sub(0, 512),
 			color = EMBEDCOLOR,
+			timestamp = DISCORDIA.Date():toISO('T', 'Z')
 		},
 	}
 end)
