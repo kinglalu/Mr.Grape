@@ -9,11 +9,12 @@ command.Register("queue", "See the queue of the music playing!", "music", functi
 	--]]
 	print(#MUSIC.queue)
 	print(FUNCTIONS.print_table(MUSIC.queue))
+	--print(MUSIC.queue.title[1])
 	if #MUSIC.queue > 0 then
 		local embed = {
 			title = msg.guild.name .. "'s Queue",
 			-- should be name instead
-			description = "**__Now playing:__** " .. "[" .. MUSIC.queue.title[1] .. "](" .. MUSIC.queue[2] .. ')',
+			description = "**__Now playing:__** "..'**['..musiclib.json.title..']'..'('..musiclib.json.webpage_url..')**',
 			fields = {},
 			footer = {
 				text = "1 of 1",

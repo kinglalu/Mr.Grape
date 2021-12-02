@@ -38,10 +38,12 @@ musiclib.queue = {}
 
 function musiclib.play(query, msg)
     args = {}
-    if parse(query).hostname == "youtube.com" then
-        args = { "--dump-json", "--clean-infojson", query }
+    if parse(query).hostname == "www.youtube.com" or parse(query).hostname == "youtu.be" then
+        print("Not searching")
+        args = { "--dump-json", query }
     else
-        args = { "--dump-json", "--clean-infojson", "ytsearch:\"" .. query .. "\"" }
+        print("Searching")
+        args = { "--dump-json", "--playlist-end", "1", "ytsearch:\"" .. query .. "\"" }
     end
 
     local process = require("coro-spawn")("yt-dlp", {
@@ -50,21 +52,24 @@ function musiclib.play(query, msg)
     })
     
     for output in process.stdout.read do
+        print(json.parse(output))
         musiclib.json = json.parse(output)
     end
-    --print(musiclib.queueAdd(musiclib.json.title, musiclib.json.formats))
-    --musiclib.queueAdd(musiclib.json.title, musiclib.json.formats[1].url)
+
+
+    musiclib.queueAdd(musiclib.json.title, musiclib.json.formats[1].url)
     conn = msg.member.voiceChannel:join()
-    --msg:reply("Now playing "..musiclib.json.title)
-    assert(msg:reply({
+    
+    msg:reply({
         embed = {
           title = "Now Playing",
-          thumbnail = {url =  musiclib.json.thumbnails[41].url},
+          thumbnail = {url =  musiclib.json.thumbnails[#musiclib.json.thumbnails].url},
           description = '**['..musiclib.json.title..']'..'('..musiclib.json.webpage_url..')**',
           color = EMBEDCOLOR,
           timestamp = DISCORDIA.Date():toISO('T', 'Z')
-          }
-      }))
+        }
+    })
+
     conn:playFFmpeg(musiclib.json.formats[1].url)
 end
 

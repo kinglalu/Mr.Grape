@@ -4,10 +4,9 @@ command.Register("play", "play music with Mr Grape!","music", function(msg, args
     elseif msg.member.voiceChannel then
         query = ''
         for i = 1, #args do
-            query = query .. ' ' .. args[i]
+            query = query .. args[i]
         end
         MUSIC.play(query, msg)
-       -- msg.channel:send("Now Playing " .. MUSIC.json.title)
     else
         msg.channel:send("You are not in a voice channel.")
     end
