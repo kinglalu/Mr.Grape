@@ -14,6 +14,7 @@
 </a>
 </div>
 
+### For information regarding building/setup, go to the project's [wiki](https://github.com/kinglalu/Mr.Grape/wiki).
 
 ## About
 
@@ -35,8 +36,6 @@ You will need to get API keys from:
 * https://api.ksoft.si | For lyrics
 * https://products.wolframalpha.com/api | For wolfram command
 * https://api.nasa.gov | For NASA picture of the day
-
-# Hosting
 
 ## VPS
 
