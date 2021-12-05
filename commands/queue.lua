@@ -5,7 +5,7 @@ command.Register("queue", "See the queue of the music playing!", "music", functi
     {name = "**3) SONG NAME**", value = "`0:00` **|** ".."<@"..msg.author.id..">", inline = false},
     {name = "**4) SONG NAME**", value = "`0:00` **|** ".."<@"..msg.author.id..">", inline = false},
     {name = "**5) SONG NAME**", value = "`0:00` **|** ".."<@"..msg.author.id..">", inline = false},
-    {name = "**6) SONG NAME**", value = "`0:00` **|** ".."<@"..msg.author.id..">", inline = false},
+    {name = "**6) SONG NAME**", value = "`0:00` **|** ".."<@"..msg.aMUSIC.bitrateuthor.id..">", inline = false},
 	--]]
 
 	if MUSIC.nowPlaying then

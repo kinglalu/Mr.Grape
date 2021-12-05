@@ -10,11 +10,6 @@ TABLE Items
 ]]--
 
 DB.KnownItems = {
-	apple = {
-		Emoji = ":apple: ",
-		description = "test apple",
-		price = 3
-	},
 	fan = {
 		Emoji = "<:fan:908145885676986398> ",
 		description = "Reduces cooldowns of some commands.",

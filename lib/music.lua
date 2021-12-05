@@ -32,7 +32,7 @@ CLIENT:on("voiceChannelLeave", function(member, channel)
     if botVoiceChannelId == channel.id and #channel.connectedMembers == 1 then
         print("The bot is alone")
         -- Disconnect from VC after 5 minutes
-        timer.setTimeout(300000, musiclib.leaveVC())
+        -- timer.setTimeout(300000, musiclib.leaveVC())
     end
 end)
 
@@ -40,12 +40,13 @@ musiclib.queue = {}
 
 function musiclib.addSong(query)
     args = {}
+    -- TODO: Use tenary
     if parse(query).hostname == "www.youtube.com" or parse(query).hostname == "youtu.be" then
         print("Not searching")
-        args = { "--dump-json", query }
+        args = { "--dump-json", "--no-playlist", "--verbose", query }
     else
         print("Searching")
-        args = { "--dump-json", "--verbose", "--playlist-end", "1", "ytsearch:\"" .. query .. "\"" }
+        args = { "--dump-json", "--no-playlist", "--verbose", "--playlist-end", "1", "ytsearch:\"" .. query .. "\"" }
     end
 
     local process = require("coro-spawn")("yt-dlp", {
@@ -73,21 +74,16 @@ end
 
 function musiclib.queueAdd(title, json)
     print(title)
-    print(json.formats[5].url)
+    print(json.formats[6].url)
     musiclib.queue[#musiclib.queue + 1] = {
         title = title,
         json = json
     }
 end
 
-function musiclib.play()
-    coroutine.wrap(function()
-        if not pcall(function () musiclib.conn:playFFmpeg(musiclib.queue[1].json.formats[5].url) end) then
-            print("Unexpected end of song")
-            musiclib.play()
-        end
-    end)()
+musiclib.bitrate = 96000
 
+function musiclib.play()
     if (#MUSIC.queue > 0) then
         musiclib.nowPlaying = "**__Now playing:__** " .. '**['..musiclib.queue[1].title..']'..'('..musiclib.queue[1].json.webpage_url..')**'
 
@@ -101,7 +97,19 @@ function musiclib.play()
             }
         })
 
+        coroutine.wrap(function()
+            if musiclib.conn then
+                musiclib.conn:setBitrate(musiclib.bitrate)
+                musiclib.conn:setComplexity(10)
+            end
+            if (pcall(function() musiclib.conn:playFFmpeg(musiclib.queue[1].json.formats[6].url, 108000000) end)) then
+                print("Song over")
+                musiclib.play()
+            end
+        end)()
+
         if not loop then
+            print("REMOVING")
             table.remove(musiclib.queue, 1)
         end
     end

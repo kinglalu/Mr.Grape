@@ -16,7 +16,7 @@ command.Register('items', 'See your items', 'economy', function(msg, args)
 	assert(msg:reply{embed = embed})
 	
 end)
-
+--[[
 command.Register('debug-add-apples', 'debug command', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
@@ -59,4 +59,4 @@ command.Register('debug-have-apples', 'debug command', 'economy', function(msg, 
 	else
 		msg:reply('You have'..items.Apple.quantity..' apples.')
 	end
-end)
+end) --]]
