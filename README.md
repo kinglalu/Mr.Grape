@@ -14,7 +14,7 @@
 </a>
 </div>
 
-### For information regarding building/setup, go to the project's [wiki](https://github.com/kinglalu/Mr.Grape/wiki).
+### For information regarding hosting/deploying, go to the project's [wiki](https://github.com/kinglalu/Mr.Grape/wiki).
 
 ## About
 
@@ -28,19 +28,3 @@ If you have any suggestions for Mr Grape, or questions, feel free to join the su
 ## Notes
 * The bot's prefix is `+` but will eventually have option to change the prefix in the future!
 * Many of the APIs used in Mr. Grape require private keys to be issued and added before those services will work.
-
-## API
-
-You will need to get API keys from:
-
-* https://api.ksoft.si | For lyrics
-* https://products.wolframalpha.com/api | For wolfram command
-* https://api.nasa.gov | For NASA picture of the day
-
-## VPS
-
-VPS hosting is made easy with [docker](https://docker.com).
-
-## Heroku
-
-Click the button above to deploy to heroku!
