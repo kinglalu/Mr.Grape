@@ -13,6 +13,7 @@ command.Register("userinfo", "Get info about a user","utility",function(msg, arg
         {name = 'Highest Role', value = '<@&' .. person.highestRole.id .. '>', inline = true},
         {name = 'Joined Server', value = person.joinedAt and person.joinedAt:gsub('%..*', ''):gsub('T', ' '), inline = true},
         {name = 'Joined Discord', value = DISCORDIA.Date.fromSnowflake(person.id):toISO(' ', ''), inline = true},
+        {name = "ㅤ", value = NODECLUSTERS, inline = false},
       },
       color = EMBEDCOLOR,
       timestamp = DISCORDIA.Date():toISO('T', 'Z')

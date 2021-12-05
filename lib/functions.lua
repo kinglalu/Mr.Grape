@@ -15,13 +15,11 @@ function functions.print_table(node)
         local cur_index = 1
         for k,v in pairs(node) do
             if (cache[node] == nil) or (cur_index >= cache[node]) then
-
                 if (string.find(output_str,"}",output_str:len())) then
                     output_str = output_str .. ",\n"
                 elseif not (string.find(output_str,"\n",output_str:len())) then
                     output_str = output_str .. "\n"
                 end
-
                
                 table.insert(output,output_str)
                 output_str = ""

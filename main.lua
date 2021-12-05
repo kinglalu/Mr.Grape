@@ -13,7 +13,9 @@ _G.CONFIG = require("./config.lua")
 _G.MUSIC = require("./lib/music.lua")
 _G.FUNCTIONS = require("./lib/functions.lua")
 _G.EMBEDCOLOR = DISCORDIA.Color.fromRGB(170, 26, 232).value
--- used
+_G.NODECLUSTERS = "Powered by [NodeClusters](https://nodeclusters.com/billing/link.php?id=8)."
+
+-- Polyfill
 function math.round(x)
 	local decimal = x - math.floor(x)
 
@@ -29,9 +31,9 @@ local function setGame()
 
 	if numbersOfGuilds == 1
 	then
-		game = "in a server"
+		game = " for +help in a server"
 	else
-		game =  "in " .. numbersOfGuilds .. " servers"
+		game =  "for +help in " .. numbersOfGuilds .. " servers"
 	end
 	_G.CLIENT:setGame{ name = game, type = 3 }
 end

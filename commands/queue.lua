@@ -7,30 +7,28 @@ command.Register("queue", "See the queue of the music playing!", "music", functi
     {name = "**5) SONG NAME**", value = "`0:00` **|** ".."<@"..msg.author.id..">", inline = false},
     {name = "**6) SONG NAME**", value = "`0:00` **|** ".."<@"..msg.author.id..">", inline = false},
 	--]]
-	print(#MUSIC.queue)
-	print(FUNCTIONS.print_table(MUSIC.queue))
-	--print(MUSIC.queue.title[1])
-	if #MUSIC.queue > 0 then
+
+	if MUSIC.nowPlaying then
 		local embed = {
 			title = msg.guild.name .. "'s Queue",
 			-- should be name instead
-			description = "**__Now playing:__** "..'**['..musiclib.json.title..']'..'('..musiclib.json.webpage_url..')**',
+			description = MUSIC.nowPlaying .. (MUSIC.loop and " :repeat:" or ''),
 			fields = {},
 			footer = {
 				text = "1 of 1",
 			},
 			color = EMBEDCOLOR,
 			timestamp = DISCORDIA.Date():toISO('T', 'Z')
-		} 
-		for i = 2, #args do
+		}
+		for i = 1, #MUSIC.queue do
 			table.insert(embed.fields, {
-				name = MUSIC.queue[i].title,
-				value = MUSIC.queue[i].url,
-				inline = true
+				name = i..")",
+				value = '**['..MUSIC.queue[i].title..']'..'('..MUSIC.queue[i].json.webpage_url..')**',
+				inline = false
 			})
         end
 		msg:reply{embed = embed}
 	else
-		msg:reply("There is nothing in the queue.")
+		msg:reply("You need to be playing songs.")
 	end
 end)

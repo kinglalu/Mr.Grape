@@ -13,6 +13,8 @@ command.Register("help", "Display's info about all the commands.","utility",func
 				fields = {
                     {name = "Categories", value = "Economy\nUtility\nFun\nModeration\nMusic", inline = true},
                     {name = "Use +help <category> to see each category's commands", value = "ㅤ", inline = false},
+                    {name = "ㅤ", value = "Powered by [NodeClusters](https://nodeclusters.com/billing/link.php?id=8)  VPS and Web Hosting", inline = false},
+
 				},
 				color = EMBEDCOLOR,
 				timestamp = DISCORDIA.Date():toISO('T', 'Z')

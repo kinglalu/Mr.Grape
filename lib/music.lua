@@ -1,6 +1,7 @@
 local timer = require('timer')
 -- Replace url.lua with this
 local musiclib = {}
+local fs = require('fs')
 local parse = require("url").parse
 local json = require("json")
 
@@ -20,7 +21,8 @@ Music Queue
 
 --]]
 
-local conn
+local msg
+local nowPlaying
 local botVoiceChannelId
 local isPaused
 
@@ -36,14 +38,14 @@ end)
 
 musiclib.queue = {}
 
-function musiclib.play(query, msg)
+function musiclib.addSong(query)
     args = {}
     if parse(query).hostname == "www.youtube.com" or parse(query).hostname == "youtu.be" then
         print("Not searching")
         args = { "--dump-json", query }
     else
         print("Searching")
-        args = { "--dump-json", "--playlist-end", "1", "ytsearch:\"" .. query .. "\"" }
+        args = { "--dump-json", "--verbose", "--playlist-end", "1", "ytsearch:\"" .. query .. "\"" }
     end
 
     local process = require("coro-spawn")("yt-dlp", {
@@ -51,56 +53,91 @@ function musiclib.play(query, msg)
         stdio = { nil, true, 2 }
     })
     
-    for output in process.stdout.read do
-        print(json.parse(output))
-        musiclib.json = json.parse(output)
+    local parts = {}
+    for part in process.stdout.read do
+        parts[#parts + 1] = part
     end
+    local output = table.concat(parts, '')
+    fs.writeFile("log/output.json", output)
 
+    if output == '' then
+        return "Unable to get json"
+    else
+        if pcall(function () musiclib.json = json.parse(output) end) then
+            musiclib.queueAdd(musiclib.json.title, musiclib.json)
+        else
+            return "Unable to fetch video information, most likely a yt-dlp bug. Create an issue if one doesn't exist or tell a mr grape developer."
+        end
+    end
+end
 
-    musiclib.queueAdd(musiclib.json.title, musiclib.json.formats[1].url)
-    conn = msg.member.voiceChannel:join()
-    
-    msg:reply({
-        embed = {
-          title = "Now Playing",
-          thumbnail = {url =  musiclib.json.thumbnails[#musiclib.json.thumbnails].url},
-          description = '**['..musiclib.json.title..']'..'('..musiclib.json.webpage_url..')**',
-          color = EMBEDCOLOR,
-          timestamp = DISCORDIA.Date():toISO('T', 'Z')
-        }
-    })
+function musiclib.queueAdd(title, json)
+    print(title)
+    print(json.formats[5].url)
+    musiclib.queue[#musiclib.queue + 1] = {
+        title = title,
+        json = json
+    }
+end
 
-    conn:playFFmpeg(musiclib.json.formats[1].url)
+function musiclib.play()
+    coroutine.wrap(function()
+        if not pcall(function () musiclib.conn:playFFmpeg(musiclib.queue[1].json.formats[5].url) end) then
+            print("Unexpected end of song")
+            musiclib.play()
+        end
+    end)()
+
+    if (#MUSIC.queue > 0) then
+        musiclib.nowPlaying = "**__Now playing:__** " .. '**['..musiclib.queue[1].title..']'..'('..musiclib.queue[1].json.webpage_url..')**'
+
+        musiclib.msg:reply({
+            embed = {
+            title = "Now Playing",
+            thumbnail = {url =  musiclib.queue[1].json.thumbnails[#musiclib.queue[1].json.thumbnails].url},
+            description = musiclib.nowPlaying,
+            color = EMBEDCOLOR,
+            timestamp = DISCORDIA.Date():toISO('T', 'Z')
+            }
+        })
+
+        if not loop then
+            table.remove(musiclib.queue, 1)
+        end
+    end
 end
 
 function musiclib.toggle(query, msg)
     if isPaused then
-        conn:resumeStream()
+        musiclib.conn:resumeStream()
         isPaused = false
     else
-        conn:pauseStream()
+        musiclib.conn:pauseStream()
         isPaused = true
     end
 end
 
-function musiclib.queueAdd(title, url)
-    print(title)
-    print(url)
-    musiclib.queue[#musiclib.queue + 1] = {
-        title = query,
-        url = url
-    }
-end
+musiclib.isPlaying = false
 
 function musiclib.joinVC(voiceChannel)
+    musiclib.isPlaying = true
     botVoiceChannelId = voiceChannel.id
-    conn = voiceChannel:join(voiceChannel)
+    musiclib.conn = voiceChannel:join(voiceChannel)
 end
 
 function musiclib.leaveVC()
-    if conn then
-        conn:close()
-    end    
+    -- Cleanup variables
+    musiclib.nowPlaying = ""
+    musiclib.botVoiceChannelId = nil
+    musiclib.isPaused = false
+    musiclib.queue = nil
+    musiclib.queue = {}
+
+    if musiclib.isPlaying == true then
+        musiclib.isPlaying = false
+        musiclib.conn:close()
+        musiclib.conn = nil
+    end
 end
 
 return musiclib

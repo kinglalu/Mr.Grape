@@ -90,6 +90,7 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
                 fields = {
                     {name = tostring(response), value = "Heres " .. earned .. " :star:"},
                     {name = "Your balance is now:", value = DB.LongString(stars) .. " :star:"},
+                    {name = "ㅤ", value = NODECLUSTERS, inline = false},
                 },
                 color = EMBEDCOLOR,
                 timestamp = DISCORDIA.Date():toISO('T', 'Z')
@@ -103,6 +104,7 @@ command.Register("work", "Your basic way of getting stars", "economy", function(
                 description = job,
                 fields = {
                     {name = tostring(response), value = "Please try again later!"},
+                    {name = "ㅤ", value = NODECLUSTERS, inline = false},
                 },
                 color = EMBEDCOLOR,
                 timestamp = DISCORDIA.Date():toISO('T', 'Z')
