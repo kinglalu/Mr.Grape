@@ -1,15 +1,11 @@
 <div align="center">
 	<img src="https://i.ibb.co/RpBbyRP/mrgrape.png" title="Mr. Grape" alt="Mr. Grape" />
 	<h1>Mr. Grape</h1>
-	<p>By kinglalu#2780,Divide#1334, and EndlessVortex#4547<p>
+	<p>By kinglalu#2780, Divide#1334, and EndlessVortex#4547<p>
 	<p>Mr. Grape is an Open Source Discord Bot made in Lua using Discordia that includes Music features, an Economy and more!</p>
 	<p> Help support Mr Grape by voting for it here on top.gg; https://top.gg/bot/743833062265323651/vote </p>
 	<p><a href="https://discord.com/oauth2/authorize?client_id=743833062265323651&scope=bot&permissions=0">
-    <img src="https://i.ibb.co/bRt9NHb/invite.png" width="147" height="32" alt="Invite to your server!"></a><p>
-	<p> <a href="https://heroku.com/deploy?template=https://github.com/kinglalu/Mr.Grape"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku"></a><p>
-	<a href="https://discord.gg/2RKPmDg2A6" align="center">
-<img src="https://img.shields.io/discord/743208211460653177?style=for-the-badge?" />
-</a>
+	<img src="https://i.ibb.co/bRt9NHb/invite.png" width="147" height="32" alt="Invite to your server!"></a><p>
 </div>
 
 ### For information regarding hosting/deploying, go to the project's [wiki](https://github.com/kinglalu/Mr.Grape/wiki).
