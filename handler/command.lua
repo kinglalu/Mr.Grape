@@ -74,7 +74,9 @@ CLIENT:on("messageCreate", function(msg)
 	local content = msg.content
 	if author == CLIENT.user then return end
 	if author.bot then return end
-
+	if not msg.guild:getMember(CLIENT.user.id):hasPermission("embedLinks") then
+        msg.channel:send("I don't have embed perms! ")
+    else
 	local prefix = command.GetPrefix()
 
 	if not (string.sub(content, 1, string.len(prefix)) == prefix) then
@@ -92,6 +94,7 @@ CLIENT:on("messageCreate", function(msg)
 	table.remove(args, 1)
 
 	command.func(msg, args)
+end
 end)
 
 command.cooling = {}

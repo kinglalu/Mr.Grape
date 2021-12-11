@@ -22,6 +22,13 @@ local function SecondsToClock()
     
     return output
 end
+ function gettotalusers()
+    local users = 0
+    for guild in CLIENT.guilds:iter() do
+        users = users + guild.totalMemberCount
+    end
+    return users
+ end
 
 command.Register("info", "Gives you info about Mr Grape!", "utility", function(msg, args)
     msg:reply{
@@ -32,6 +39,7 @@ command.Register("info", "Gives you info about Mr Grape!", "utility", function(m
                 { name = "Uptime:", value = SecondsToClock() },
                 {name = "Credits:", value = "Kinglalu, Divide, Linuxterm\n JS version by DAONE\n Emojis by Goobermeister\n Original bot by Horsey4 & Airplane Bong"},
                 {name = "Number of servers:", value = #CLIENT.guilds},
+                {name = "Total Users: ", value = gettotalusers() },
                 {name = "ㅤ", value = "Powered by [NodeClusters](https://nodeclusters.com/billing/link.php?id=8). Nodeclusters is affordable web and vps hosting for as low as $3 a month.", inline = false},
             },
             color = EMBEDCOLOR,
