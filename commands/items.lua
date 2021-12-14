@@ -27,18 +27,24 @@ command.Register('debug-add-apples', 'debug command', 'economy', function(msg, a
 	
 	msg:reply('Ok.')
 end)
-
-command.Register('debug-erase-apples', 'debug command', 'economy', function(msg, args)
-	local id = DB.CreateRowUser(msg.author)
+--]]
+command.Register('reset', 'developer only command', 'economy', function(msg, args)
+	if msg.author.id == 329331044828446722 or 792347503960915968 then
+	local person = command.FirstMention(msg)
+	local id = DB.CreateRowUser(person)
+    local stars = DB.GetUserStars(id)
 	local items = DB.GetUserItems(id)
-
-	items.fan = nil
+	items = {}
+	DB.SetUserItems(id,items)
 	
-	DB.SetUserItems(id, items)
-	
+	stars = 0
+	DB.SetUserStars(id, stars)
 	msg:reply('Ok.')
+	else msg:reply("not developer")
+	end
 end)
 
+--[[
 command.Register('debug-test-apples', 'debug command', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
