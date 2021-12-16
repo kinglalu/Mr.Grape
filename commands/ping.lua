@@ -1,3 +1,3 @@
-command.Register("ping", "utility", function(msg, args)
+command.Register("ping","Your basic ping command!","utility", function(msg, args)
 	msg.channel:send("Pong!")
 end)
