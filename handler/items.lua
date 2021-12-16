@@ -50,7 +50,7 @@ function DB.GetUserItems(id)
 	
 	for i,v in pairs(items) do
 		if not DB.KnownItems[i] or not v.quantity or v.quantity == 0 then
-			Items[i] = nil
+			items[i] = nil
 		end
 	end
 	
