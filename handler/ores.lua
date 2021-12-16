@@ -10,36 +10,6 @@ TABLE ores
 ]]--
 
 DB.KnownOres = {
-	fan = {
-		Emoji = "<:fan:908145885676986398> ",
-		description = "Reduces cooldowns of some commands.",
-		price = 350
-	},
-	orangedetector = {
-		Emoji = ":tangerine: ",
-		description = "Increases the chance you find an orange in the orange job.",
-		price = 100
-	},
-	mangodetector = {
-		Emoji = ":mango: ",
-		description = "Increases the chance you find a mango in the mango job.",
-		price = 100
-	},
-	carrotdetector = {
-		Emoji = ":carrot: ",
-		description = "Increases the chance you find a carrot in the carrot job.",
-		price = 100
-	},
-	starmagnet = {
-		Emoji = ":magnet: ",
-		description = "Increases the amount of :star:s gained per job.",
-		price = 250
-	},
-	shovel = {
-		Emoji = "<:shovel:908207500942258176> ",
-		description = "Gives you more stars for digging job.",
-		price = 305
-	}
 
 }
 
