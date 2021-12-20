@@ -22,3 +22,4 @@ If you have any suggestions for Mr Grape, or questions, feel free to join the su
 ## Notes
 * The bot's prefix is `+` but will eventually have option to change the prefix in the future!
 * Many of the APIs used in Mr. Grape require private keys to be issued and added before those services will work.
+* The JS version of the bot in discordjs is found [here](https://github.com/kinglalu/Mr.Grape-JS), although no longer maintained.
