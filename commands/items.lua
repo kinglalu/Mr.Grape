@@ -1,10 +1,11 @@
 local DB = require('../handler/items.lua')
 
 command.Register('items', 'See your items', 'economy', function(msg, args)
-	local id = DB.CreateRowUser(msg.author)
+	local person = command.FirstMention(msg)
+	local id = DB.CreateRowUser(person)
 	local items = DB.GetUserItems(id)
 	local embed = {
-		title = "Items",
+		title = person.name.."'s Items",
 		fields = {},
 		color = EMBEDCOLOR,
         timestamp = DISCORDIA.Date():toISO('T', 'Z')
