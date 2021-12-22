@@ -21,8 +21,6 @@ command.Register("buy", "Purchase an item from the shop with :star:", "economy",
 		return nil
 	end
 	
-	print(DB.CalculatePrice(id, purchase), stars)
-	
 	if stars < DB.CalculatePrice(id, purchase) then
 		msg:reply("You don't have enough :star:")
 		return nil
