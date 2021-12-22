@@ -5,7 +5,7 @@ command.Register("shop", "Displays the shop for items you can buy with :star:", 
 	local id = DB.CreateRowUser(msg.author)
 	local embed = {
 		title = "Shop",
-		description = "`Buy an item by using "..PREFIX.."buy <itemname>!`",
+		description = "`Buy an item by using "..PREFIX.."buy <itemname>!` \n `Item prices are increased based on amount owned.`",
 		fields = {},
 		color = EMBEDCOLOR,
 		timestamp = DISCORDIA.Date():toISO('T', 'Z')
