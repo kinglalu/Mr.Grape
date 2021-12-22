@@ -14,6 +14,11 @@ command.Register("buy", "Purchase an item from the shop with :star:", "economy",
         msg:reply("Thats not a valid item!")
         return nil
 end
+    for g,b in pairs(items) do
+        if v == g then
+        v.price = v.price*b.quantity
+   end
+end 
                 if stars >= v.price then -- has enough stars
                     if not items[purchase] then items[purchase] = { quantity = 0 } end
                     items[purchase].quantity = items[purchase].quantity + 1
