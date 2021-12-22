@@ -82,7 +82,7 @@ function DB.CalculatePrice(id, itemid)
 	local quantity  = 1;
 	
 	if items[itemid] ~= nil and items[itemid].quantity > 0 then
-		quantity  = items[itemid].quantity / 2;
+		quantity = items[itemid].quantity / 2;
 	end
 	
 	-- math.pow(price, quantity );
