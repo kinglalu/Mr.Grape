@@ -15,19 +15,22 @@ command.Register("buy", "Purchase an item from the shop with :star:", "economy",
         return nil
 end
     for g,b in pairs(items) do
-        if v == g then
-        v.price = v.price*b.quantity
-   end
-end 
-                if stars >= v.price then -- has enough stars
+        if not items[g] then 
+            v.userprice = v.price 
+        else if v == g then
+        v.userprice = v.price*b.quantity
+        end
+    end
+                if stars >= v.userprice then -- has enough stars
                     if not items[purchase] then items[purchase] = { quantity = 0 } end
                     items[purchase].quantity = items[purchase].quantity + 1
-                    stars = stars - v.price
+                    stars = stars - v.userprice
                     starDB.SetUserStars(id, stars)
                     DB.SetUserItems(id, items)
                     msg:reply("Purchase Complete!")
                 else
                     msg:reply("You don't have enough :star:")
+            end
         end
     end
 end)

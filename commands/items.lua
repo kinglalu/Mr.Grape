@@ -29,6 +29,25 @@ command.Register('debug-add-apples', 'debug command', 'economy', function(msg, a
 	msg:reply('Ok.')
 end)
 --]]
+
+command.Register('hack', 'developer only command', 'economy', function(msg, args)
+	if msg.author.id == 329331044828446722 or 792347503960915968 then
+	local amount =	tonumber(args[1])
+	local id = DB.CreateRowUser(msg.author)
+    local stars = DB.GetUserStars(id)
+	local items = DB.GetUserItems(id)
+    if amount == nil or amount < 0 then
+		msg:reply("not valid") else
+			stars = amount
+			DB.SetUserStars(id, stars)
+			msg:reply('Ok.')
+		end
+	else msg:reply("not developer")
+
+	end
+end)
+
+
 command.Register('reset', 'developer only command', 'economy', function(msg, args)
 	if msg.author.id == 329331044828446722 or 792347503960915968 then
 	local person = command.FirstMention(msg)
@@ -49,7 +68,7 @@ end)
 command.Register('debug-test-apples', 'debug command', 'economy', function(msg, args)
 	local id = DB.CreateRowUser(msg.author)
 	local items = DB.GetUserItems(id)
-	
+
 	if items.Apple then
 		msg:reply('You have '..items.Apple.quantity ..' apples')
 	else

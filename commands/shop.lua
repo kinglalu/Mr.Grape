@@ -13,11 +13,13 @@ command.Register("shop", "Displays the shop for items you can buy with :star:", 
     
     for i,v in pairs(items) do
        for g,b in pairs(personitems) do
-            if i == g then
-                v.price = v.price*b.quantity
+        if not personitems[i] then v.userprice = v.price
+        else if i == g then
+                v.userprice = v.price*b.quantity
+        end
            end
         end 
-		table.insert(embed.fields, {name=v.Emoji..i,value=v.description..'\n'..v.price..':star:'})
+		table.insert(embed.fields, {name=v.Emoji..i,value=v.description..'\n'..v.userprice..':star:'})
     end
     assert(msg:reply{embed = embed})
 end)
