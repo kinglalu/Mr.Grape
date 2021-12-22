@@ -77,11 +77,11 @@ for k, v in fs.scandirSync("./commands") do
 	print("	", "[CMDS]", "Success:", k, "has been loaded.")
 end
 
-print("[EVENTS]", "Loading command files")
+--[[print("[EVENTS]", "Loading command files")
 for k, v in fs.scandirSync("./events") do
 	print("[EVENTS]", "Loading:", k)
 	local data = require("./events/"..k)
 	print("	", "[EVENTS]", "Success:", k, "has been loaded.")
-end
+end]]--
 
 CLIENT:run('Bot ' .. CONFIG.token)

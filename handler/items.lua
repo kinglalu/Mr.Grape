@@ -76,4 +76,17 @@ function DB.SetUserItems(id, items)
 	return items
 end
 
-return DB
+function DB.CalculatePrice(id, itemid)
+	local price = DB.KnownItems[itemid].price
+	local items = DB.GetUserItems(id)
+	local quantity  = 1;
+	
+	if items[itemid] ~= nil and items[itemid].quantity > 0 then
+		quantity  = items[itemid].quantity / 2;
+	end
+	
+	-- math.pow(price, quantity );
+	return price * quantity
+end
+
+return DB;
