@@ -1,11 +1,19 @@
 local DB = require('../db.lua')
 
+function DB.GetUserLastDaily(id)
+	return DB.rowexecb("SELECT last_daily FROM users WHERE id = ?", id)
+end
+
+function DB.SetUserDailyStars(id, time)
+	return DB.rowexecb("UPDATE users SET last_daily = ? WHERE id = ?", time, id)
+end
+
 function DB.GetUserStars(id)
-	return DB.db:rowexec('SELECT stars FROM users WHERE id = "' .. id .. '"')
+	return DB.rowexecb("SELECT stars FROM users WHERE id = ?", id)
 end
 
 function DB.SetUserStars(id, stars)
-	DB.db:exec('UPDATE users SET stars = ' .. DB.LongString(stars) .. ' WHERE id = "' .. id .. '"')
+	return DB.rowexecb("UPDATE users SET stars = ? WHERE id = ?", stars, id)
 end
 
 return DB

@@ -15,12 +15,13 @@ local db = sql.open("grape.db")
 
 db:exec[[
 CREATE TABLE IF NOT EXISTS users (
-	id TEXT PRIMARY KEY NOT NULL,
+	id INTEGER PRIMARY KEY NOT NULL,
 	tag TEXT NOT NULL,
 	items TEXT NOT NULL,
 	ores TEXT NOT NULL,
 	stars INTEGER NOT NULL,
 	stars_changing INTEGER NOT NULL,
+	last_daily INTEGER,
 	UNIQUE(id)
 );
 ]]
@@ -34,32 +35,44 @@ function exports.LongString(x)
     return tostring(x):gsub("[^0-9.]", "")
 end
 
-function exports.CreateRowUser(user)
-	local id = tostring(user.id)
+function err(code, msg)
+  error("ljsqlite3 db["..code.."] "..msg)
+end
+
+function exports.rowexecb(statement, ...)
+	local binds={...}
+    
+	local stmt = db:prepare(statement)
+	stmt:bind(table.unpack(binds))
 	
-    local exists = db:rowexec('SELECT EXISTS(SELECT 1 FROM users WHERE id = "' .. id .. '")')
+	local res = stmt:_step()
+	if stmt:_step() then
+		err("misuse", "multiple records returned, 1 expected")
+	end
+	
+	stmt:close()
+	
+	if res then
+		return unpack(res)
+	else
+		return nil
+	end
+end
+
+function exports.CreateRowUser(user)
+	local id = user.id
+	
+	local exists = exports.rowexecb("SELECT EXISTS(SELECT 1 FROM users WHERE id = ?)", id)
 
 	-- Create row
     if exists == 0 then
-		local stmt = db:prepare[[
-			INSERT INTO users (id, tag, stars, items, ores, stars_changing) VALUES (?, ?, 0, "{}", "{}", 0)
-		]]
-		
-		stmt:bind(id, user.tag)
-		stmt:step()
-		stmt:close()
+		exports.rowexecb('INSERT INTO users (id, tag, stars, items, ores, stars_changing) VALUES (?, ?, 0, "{}", "{}", 0)', id, user.tag)
     else
-		local tag = db:rowexec('SELECT tag, id FROM users WHERE id = "' .. id .. '"')
+		local tag = exports.rowexecb('SELECT tag, id FROM users WHERE id = ?', id)
 		
+		-- tag outdated
 		if tag ~= user.tag then
-			-- tag outdated
-			local stmt = db:prepare[[
-				UPDATE users SET tag = ? WHERE id = ?
-			]]
-			
-			stmt:bind(user.tag, id)
-			stmt:step()
-			stmt:close()
+			exports.rowexecb("UPDATE users SET tag = ? WHERE id = ?", user.tag, id)
 		end
 	end
 	

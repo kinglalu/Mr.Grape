@@ -45,7 +45,7 @@ DB.KnownItems = {
 
 -- ID from CreateUserRow
 function DB.GetUserItems(id)
-	local db_items = DB.db:rowexec('SELECT items FROM users WHERE id = "' .. id .. '"')
+	local db_items = DB.rowexecb('SELECT items FROM users WHERE id = ?', id)
 	local items = JSON.parse(db_items)
 	
 	for i,v in pairs(items) do
@@ -59,15 +59,7 @@ end
 
 -- ID from CreateUserRow
 function DB.SetUserItems(id, items)
-	local stmt = DB.db:prepare[[
-		UPDATE users SET items = ? WHERE id = ?
-	]]
-	
-	stmt:bind(JSON.stringify(items), id)
-	stmt:step()
-	stmt:close()
-	
-	return items
+	return DB.rowexecb("UPDATE users SET items = ? WHERE id = ?", JSON.stringify(items), id)
 end
 
 function DB.CalculatePrice(id, itemid)
@@ -78,6 +70,8 @@ function DB.CalculatePrice(id, itemid)
 	if items[itemid] ~= nil and items[itemid].quantity > 0 then
 		quantity = items[itemid].quantity / 2;
 	end
+	
+	if quantity < 1 then quantity = 1 end
 	
 	-- math.pow(price, quantity );
 	return price * quantity

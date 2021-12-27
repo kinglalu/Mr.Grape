@@ -15,7 +15,7 @@ DB.KnownOres = {
 
 -- ID from CreateUserRow
 function DB.GetUserOres(id)
-	local db_ores = DB.db:rowexec('SELECT ores FROM users WHERE id = "' .. id .. '"')
+	local db_ores = DB.rowexecb('SELECT ores FROM users WHERE id = ?', id)
 	local ores = JSON.parse(db_ores)
 	
 	for i,v in pairs(ores) do
@@ -29,14 +29,7 @@ end
 
 -- ID from CreateUserRow
 function DB.SetUserOres(id, ores)
-	local stmt = DB.db:prepare[[
-		UPDATE users SET ores = ? WHERE id = ?
-	]]
-	
-	stmt:bind(JSON.stringify(ores), id)
-	stmt:step()
-	stmt:close()
-	
+	DB.rowexecb("UPDATE users SET ores = ? WHERE id = ?", JSON.stringify(ores), id);
 	return ores
 end
 

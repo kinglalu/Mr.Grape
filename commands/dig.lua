@@ -18,15 +18,16 @@ command.Register("dig", "dig for :star:", "economy", function(msg, args)
     if command.Cooldown(msg, "dig", cooldowntotal, "You're digging too fast, the mines are gonna go bare! Wait **%s** seconds before digging again.") then return end
 
     local earned = math.random(7,14)
-		if not items.shovel then
-            stars = stars + earned
-        else
-            earned = earned + items.shovel.quantity
-            stars = stars + earned
-        end
+	
+	if items.shovel then
+		earned = earned + math.max(items.shovel.quantity, 0)
+	end
+	
+	stars = stars + earned
 
     DB.SetUserStars(id, stars)
-    msg:reply({
+    
+	msg:reply({
         embed = {
             title = msg.author.name .. "'s dig",
             fields = {
