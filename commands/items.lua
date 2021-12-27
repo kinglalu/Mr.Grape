@@ -6,16 +6,28 @@ command.Register('items', 'See your items', 'economy', function(msg, args)
 	local items = DB.GetUserItems(id)
 	local embed = {
 		title = person.name.."'s Items",
-		fields = {},
+		description = "",
 		color = EMBEDCOLOR,
         timestamp = DISCORDIA.Date():toISO('T', 'Z')
 	}
 	
-	for i,v in pairs(items) do
-		table.insert(embed.fields, {name=i..'(s)',value=v.quantity})
-	end
-	assert(msg:reply{embed = embed})
+	local last_i = nil
 	
+	for i,v in pairs(items) do
+		last_i = i
+		embed.description = embed.description .. DB.KnownItems[i].Emoji .. " " .. i .. ": " .. v.quantity
+	end
+	
+	if last_i == nil then
+		if person == msg.member then
+			embed.description = "You have no items."
+		else
+			embed.description = person.name .. " has no items."
+		end
+	end
+	
+	
+	assert(msg:reply{embed = embed})
 end)
 --[[
 command.Register('debug-add-apples', 'debug command', 'economy', function(msg, args)

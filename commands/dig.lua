@@ -20,7 +20,7 @@ command.Register("dig", "dig for :star:", "economy", function(msg, args)
     local earned = math.random(7,14)
 	
 	if items.shovel then
-		earned = earned + math.max(items.shovel.quantity, 0)
+		earned = earned + math.round(math.max(items.shovel.quantity, 0) / 2)
 	end
 	
 	stars = stars + earned
