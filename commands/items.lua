@@ -15,7 +15,7 @@ command.Register('items', 'See your items', 'economy', function(msg, args)
 	
 	for i,v in pairs(items) do
 		last_i = i
-		embed.description = embed.description .. DB.KnownItems[i].Emoji .. " " .. i .. ": " .. v.quantity
+		embed.description = embed.description .. DB.KnownItems[i].Emoji .. " " .. i .. ": " .. v.quantity.."\n"
 	end
 	
 	if last_i == nil then
