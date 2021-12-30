@@ -6,22 +6,40 @@ command.Register("dig", "dig for :star:", "economy", function(msg, args)
     local stars = DB.GetUserStars(id)
     local cooldowntotal = 30
     
-    if not items.fan  then
-        cooldowntotal = 30
-    else 
-        cooldowntotal = cooldowntotal - items.fan.quantity
-        if cooldowntotal < 1 then
-            cooldowntotal = 1
-        end
+    if items.fan then 
+        cooldowntotal = math.max(cooldowntotal - items.fan.quantity, 1)
     end
 
     if command.Cooldown(msg, "dig", cooldowntotal, "You're digging too fast, the mines are gonna go bare! Wait **%s** seconds before digging again.") then return end
-
+	
     local earned = math.random(7,14)
 	
+	local efields = {
+		{name = "You dug up "..earned.." :star:", value = "ㅤ"},
+	}
+	
 	if items.shovel then
-		earned = earned + math.round(math.max(items.shovel.quantity, 0) / 2)
+		if math.random(0, 4) == 0 then
+			local msg = ""
+			local loss = math.round(math.max(math.random(1, items.shovel.quantity / 80), 1))
+			
+			if loss > 1 then
+				msg = loss .. " of your shovels were chipped."
+			else
+				msg = "A shovel was chipped."
+			end
+			
+			items.shovel.quantity = items.shovel.quantity - loss
+			
+			DB.SetUserItems(id, items)
+			
+			table.insert(efields, {name = "Oh no!", value = msg })
+		end
+		
+		earned = earned + math.round(items.shovel.quantity / 2)
 	end
+	
+	table.insert(efields, {name = "Your balance is now:", value = DB.LongString(stars) .. " :star:"})
 	
 	stars = stars + earned
 
@@ -30,10 +48,7 @@ command.Register("dig", "dig for :star:", "economy", function(msg, args)
 	msg:reply({
         embed = {
             title = msg.author.name .. "'s dig",
-            fields = {
-                {name = "You dug up "..earned.." :star:", value = "ㅤ"},
-                {name = "Your balance is now:", value = DB.LongString(stars) .. " :star:"},
-            },
+            fields = efields,
             color = EMBEDCOLOR,
             timestamp = DISCORDIA.Date():toISO('T', 'Z')
         }
