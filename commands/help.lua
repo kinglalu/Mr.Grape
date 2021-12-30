@@ -13,8 +13,7 @@ command.Register("help", "Display's info about all the commands.","utility",func
 				fields = {
                     {name = "Categories", value = "Economy\nUtility\nFun\nModeration\nMusic", inline = true},
                     {name = "Use +help <category> to see each category's commands", value = "ㅤ", inline = false},
-                    {name = "ㅤ", value = "Powered by [NodeClusters](https://nodeclusters.com/billing/link.php?id=8)  VPS and Web Hosting", inline = false},
-
+					{name = "ㅤ", value = "Mr.Grape is powered by [NodeClusters, affordable VPS and Web Hosting](https://nodeclusters.com/billing/link.php?id=8).", inline = false},
 				},
 				color = EMBEDCOLOR,
 				timestamp = DISCORDIA.Date():toISO('T', 'Z')
@@ -23,7 +22,7 @@ command.Register("help", "Display's info about all the commands.","utility",func
         return nil
 	elseif #args == 1 then
 		for index, value in pairs(command.commands) do
-			if value["category"] == args[1]:lower() then
+			if #value.category ~= 0 and value.category == args[1]:lower() then
 				table.insert(embed["fields"], {
 					name = index,
 					value = value["desc"]

@@ -107,20 +107,20 @@ function command.Cooldown(message, cid, time, response)
 
 	local cmds = command.cooling[id]
 	local cooldown = false;
-	local now = os.time() + (os.clock() / 10)
+	local now = os.time()
 	
 	if cmds[cid] ~= nil then
-		local expires = cmds[cid]
+		local _then = cmds[cid]
 		
-		if expires < now then
+		if (_then + time) < now then
 			cmds[cid] = nil
 		else 
-			cooldown = expires - now
+			cooldown = (_then + time) - now
 		end
 	else
-		cmds[cid] = now + time
+		cmds[cid] = now
 	end
-
+	
 	if cooldown == false then return false end
 
 	if response == nil then response = "You need to wait  %s seconds to run this command again." end

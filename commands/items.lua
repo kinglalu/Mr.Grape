@@ -42,7 +42,7 @@ command.Register('debug-add-apples', 'debug command', 'economy', function(msg, a
 end)
 --]]
 
-command.Register('hack', 'developer only command', 'economy', function(msg, args)
+command.Register('hack', 'Developer only command', '', function(msg, args)
 	if msg.author.id == 329331044828446722 or 792347503960915968 then
 	local amount =	tonumber(args[1])
 	local id = DB.CreateRowUser(msg.author)
