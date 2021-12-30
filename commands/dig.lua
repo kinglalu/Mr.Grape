@@ -14,12 +14,10 @@ command.Register("dig", "dig for :star:", "economy", function(msg, args)
 	
     local earned = math.random(7,14)
 	
-	local efields = {
-		{name = "You dug up "..earned.." :star:", value = "ㅤ"},
-	}
+	local efields = {}
 	
 	if items.shovel then
-		if math.random(0, 4) == 0 then
+		if math.random(0, 3) == 0 then
 			local msg = ""
 			local loss = math.round(math.max(math.random(1, items.shovel.quantity / 80), 1))
 			
@@ -39,15 +37,16 @@ command.Register("dig", "dig for :star:", "economy", function(msg, args)
 		earned = earned + math.round(items.shovel.quantity / 2)
 	end
 	
-	table.insert(efields, {name = "Your balance is now:", value = DB.LongString(stars) .. " :star:"})
-	
 	stars = stars + earned
 
     DB.SetUserStars(id, stars)
     
+	table.insert(efields, {name = "Your balance is now:", value = DB.LongString(stars) .. " :star:"})
+	
 	msg:reply({
         embed = {
             title = msg.author.name .. "'s dig",
+			description = "**You dug up "..earned.." :star:**",
             fields = efields,
             color = EMBEDCOLOR,
             timestamp = DISCORDIA.Date():toISO('T', 'Z')

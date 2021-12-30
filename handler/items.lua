@@ -74,7 +74,7 @@ function DB.CalculatePrice(id, itemid)
 	if quantity < 1 then quantity = 1 end
 	
 	-- math.pow(price, quantity );
-	return price * quantity
+	return math.max(math.round(price * quantity), price * 40)
 end
 
 return DB;
