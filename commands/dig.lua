@@ -36,7 +36,7 @@ command.Register("dig", "dig for :star:", "economy", function(msg, args)
 			table.insert(efields, {name = "Oh no!", value = msg })
 		end
 		
-		earned = earned + math.round(math.max(items.shovel.quantity, 0) / 2)
+		earned = earned + math.round(items.shovel.quantity / 2)
 	end
 	
 	table.insert(efields, {name = "Your balance is now:", value = DB.LongString(stars) .. " :star:"})
