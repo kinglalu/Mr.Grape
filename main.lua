@@ -10,7 +10,6 @@ _G.URL = require("./lib/url.lua")
 _G.DISCORDIA = discordia
 _G.CLIENT = discordia.Client()
 _G.CONFIG = require("./config.lua")
-_G.MUSIC = require("./lib/music.lua")
 _G.FUNCTIONS = require("./lib/functions.lua")
 _G.EMBEDCOLOR = DISCORDIA.Color.fromRGB(170, 26, 232).value
 _G.NODECLUSTERS = "Powered by [NodeClusters](https://nodeclusters.com/billing/link.php?id=8)."

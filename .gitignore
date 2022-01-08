@@ -3,4 +3,4 @@
 /grape.db
 /discordia.log
 /gateway.json
-/log
+/log/*.json

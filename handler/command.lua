@@ -2,7 +2,7 @@ local command = {}
 
 command.name = "command"
 command.commands = {}
-command.prefix = "+"
+command.prefix = "d+"
 _G.PREFIX = command.prefix
 
 function command.SetPrefix(cmd)
