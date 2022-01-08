@@ -18,7 +18,7 @@ command.Register("gamble", "Gamble your stars away and hope your lucky", "econom
 		timestamp = DISCORDIA.Date():toISO('T', 'Z')
 	}
 	
-    if prize == nil or prize < 0 or prize == 0 or prize > 1e6 then
+    if prize == nil or prize < 0 or prize == 0 or prize > 1e6 or prize ~= prize then
 		msg:reply("That's not a valid number to gamble!")
     elseif prize > stars then
 		msg:reply("You don't have enough :star:!")
