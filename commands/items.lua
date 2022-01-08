@@ -1,4 +1,5 @@
 require('../handler/items.lua')
+require('../handler/economy.lua')
 local DB = require('../db.lua')
 
 command.Register('items', 'See your items', 'economy', function(msg, args)

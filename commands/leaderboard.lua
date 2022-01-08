@@ -1,3 +1,4 @@
+require('../handler/items.lua')
 require('../handler/economy.lua')
 local DB = require('../db.lua')
 local MAX_COLUMNS = 10
