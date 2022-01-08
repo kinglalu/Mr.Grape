@@ -1,4 +1,5 @@
-local DB = require('../handler/economy.lua')
+require('../handler/economy.lua')
+local DB = require('../db.lua')
 
 command.Register("gamble", "Gamble your stars away and hope your lucky", "economy", function(msg,args)
 	if command.Cooldown(msg, "gamble", 5, "Calm down on the gambling bro, wait **%s** seconds before gambling again.") then return end
@@ -16,7 +17,7 @@ command.Register("gamble", "Gamble your stars away and hope your lucky", "econom
 		timestamp = DISCORDIA.Date():toISO('T', 'Z')
 	}
 	
-    if prize == nil or prize < 0 or prize == 0 then
+    if prize > 1e6 or prize == nil or prize < 0 or prize == 0 then
 		msg:reply("That's not a valid number to gamble!")
     elseif prize > stars then
 		msg:reply("You don't have enough :star:!")

@@ -1,4 +1,5 @@
-local DB = require('../handler/economy.lua')
+require('../handler/economy.lua')
+local DB = require('../db.lua')
 
 command.Register("dig", "dig for :star:", "economy", function(msg, args)
     local id = DB.CreateRowUser(msg.author)

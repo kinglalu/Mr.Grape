@@ -1,4 +1,5 @@
-local DB = require('../handler/items.lua')
+require('../handler/items.lua')
+local DB = require('../db.lua')
 
 command.Register('items', 'See your items', 'economy', function(msg, args)
 	local person = command.FirstMention(msg)
@@ -60,6 +61,7 @@ command.Register('hack', 'Developer only command', '', function(msg, args)
 end)
 
 
+--[[
 command.Register('reset', 'developer only command', 'economy', function(msg, args)
 	if msg.author.id == 329331044828446722 or 792347503960915968 then
 	local person = command.FirstMention(msg)
@@ -75,6 +77,7 @@ command.Register('reset', 'developer only command', 'economy', function(msg, arg
 	else msg:reply("not developer")
 	end
 end)
+]]--
 
 --[[
 command.Register('debug-test-apples', 'debug command', 'economy', function(msg, args)

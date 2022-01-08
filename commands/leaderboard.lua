@@ -1,4 +1,5 @@
-local DB = require('../handler/economy.lua')
+require('../handler/economy.lua')
+local DB = require('../db.lua')
 local MAX_COLUMNS = 10
 
 command.Register("leaderboard", "leaderboard", "economy", function(msg,args)

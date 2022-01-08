@@ -1,4 +1,5 @@
-local DB = require('../handler/economy.lua')
+require('../handler/economy.lua')
+local DB = require('../db.lua')
 
 local second = 6e3
 local hour = second * 60

@@ -1,4 +1,5 @@
-local DB = require('../handler/economy.lua')
+require('../handler/economy.lua')
+local DB = require('../db.lua')
 
 local jobs = {
     'Will you help me find my orange?\nIt fell in a bush full of bananas over there, but I could not find it.\nPlease go there and find my orange.',

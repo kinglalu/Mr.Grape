@@ -1,4 +1,5 @@
-local DB = require('../handler/economy.lua')
+require('../handler/economy.lua')
+local DB = require('../db.lua')
 
 command.Register("bal", "See your balance of :star:", "economy", function(msg, args)
     local person = command.FirstMention(msg)

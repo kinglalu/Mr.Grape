@@ -1,4 +1,5 @@
-local DB = require('../handler/items.lua')
+require('../handler/items.lua')
+local DB = require('../db.lua')
     
 command.Register("shop", "Displays the shop for items you can buy with :star:", "economy", function(msg, args)
 	local items = DB.KnownItems
