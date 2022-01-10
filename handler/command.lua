@@ -95,7 +95,7 @@ CLIENT:on("messageCreate", function(msg)
 		return
 	end
 	
-	local args = command.FormatArguments(string.Explode(" ", content))
+	local args = command.FormatArguments(string.explode(" ", content))
 
 	args[1] = string.sub(args[1], string.len(prefix) + 1)
 

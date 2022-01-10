@@ -1,4 +1,5 @@
-local timer = require('timer')
+local util = require("./lib/util.lua")
+local coro_spawn = require('coro-spawn')
 -- Replace url.lua with this
 local fs = require('fs')
 local parse = require("url").parse
@@ -21,8 +22,8 @@ function Music:__init(guild)
 	self._nowPlaying = ""
 	self._guild = guild
 	self._bitrate = 96000
-	self._isPaused = false;
-	self._isPlaying = false
+	self._isPaused = false
+	self._isConnected = false
 	self._queue = {}
     self._botVoiceChannelId = nil
 end
@@ -57,6 +58,8 @@ CLIENT:on("voiceChannelLeave", function(member, channel)
     end
 end)
 
+-- returns type() string if an error occured
+-- returns type() table if the data was successfully retrieved
 function Music:addSong(query)
     args = {}
     -- TODO: Use tenary
@@ -68,47 +71,67 @@ function Music:addSong(query)
         args = { "--dump-json", "--no-playlist", "--verbose", "--playlist-end", "1", "ytsearch:\"" .. query .. "\"" }
     end
 
-    local process = require("coro-spawn")("yt-dlp", {
+    local process = coro_spawn("yt-dlp", {
         args = args,
         stdio = { nil, true, 2 }
     })
 	
-	if process == nil then return nil end
-    
-    local parts = {}
-    for part in process.stdout.read do
-        parts[#parts + 1] = part
+	if process == nil then
+		return "Unable to launch YTDL."
     end
-    local output = table.concat(parts, '')
-    fs.writeFile("log/output.json", output)
-
-    if output == '' then
-        return "Unable to get json"
-    else
-        if pcall(function () self._json = json.parse(output) end) then
-            self:queueAdd(self._json.title, self._json)
-        else
-            return "Unable to fetch video information, most likely a yt-dlp bug. Create an issue if one doesn't exist or tell a mr grape developer."
-        end
-    end
+	
+	local data = nil
+	local errmsg = nil
+	
+pcall(function ()
+	local parts = {}
+	for part in process.stdout.read do
+		parts[#parts + 1] = part
+	end
+	
+	local output = table.concat(parts, '')
+	
+	if output == '' then
+		errmsg = "Couldn't read any JSON bytes"
+		return nil
+	end
+	
+	errmsg = "An error occured when parsing YTDL."
+	local parsed = JSON.parse(output)
+	
+	errmsg = "An error occurred when extracting data from YTDL."
+	data = {
+		title = parsed.title,
+		webpage_url = parsed.webpage_url,
+		thumbnails = parsed.thumbnails,
+		formats = parsed.formats,
+	}
+	errmsg = ""
+end)
+	
+	if errmsg:len() > 0 then
+		return errmsg
+	end
+	
+	if data == nil then return "An unknown error occured." end
+	
+	self:queueAdd(data)
+	return data
 end
 
-function Music:queueAdd(title, json)
+function Music:queueAdd(data)
 	-- self._queue[#self._queue + 1] = {
-	table.insert(self._queue, {
-		title = title,
-		json = json
-	})
+	table.insert(self._queue, data)
 end
 
 function Music:play(msg)
-    if (#self.queue > 0) then
-        self._nowPlaying = "**__Now playing:__** " .. '**['..self._queue[1].title..']'..'('..self._queue[1].json.webpage_url..')**'
+    if (#self._queue > 0) then
+        self._nowPlaying = "**__Now playing:__** " .. '**['..self._queue[1].title..']'..'('..self._queue[1].webpage_url..')**'
 
         msg:reply({
             embed = {
             title = "Now Playing",
-            thumbnail = {url =  self._queue[1].json.thumbnails[#self._queue[1].json.thumbnails].url},
+            thumbnail = {url =  self._queue[1].thumbnails[#self._queue[1].thumbnails].url},
             description = self._nowPlaying,
             color = EMBEDCOLOR,
             timestamp = DISCORDIA.Date():toISO('T', 'Z')
@@ -120,7 +143,7 @@ function Music:play(msg)
                 self._conn:setBitrate(self._bitrate)
                 self._conn:setComplexity(10)
             end
-            if (pcall(function() self._conn:playFFmpeg(self._queue[1].json.formats[6].url, 108000000) end)) then
+            if (pcall(function() self._conn:playFFmpeg(self._queue[1].formats[6].url, 108000000) end)) then
                 print("Song over")
                 self:play(msg)
             end
@@ -144,7 +167,7 @@ function Music:toggle(query, msg)
 end
 
 function Music:joinVC(voiceChannel)
-    self._isPlaying = true
+    self._isConnected = true
     self._botVoiceChannelId = voiceChannel.id
     self._conn = voiceChannel:join(voiceChannel)
 end
@@ -156,8 +179,8 @@ function Music:leaveVC()
     self._isPaused = false
     self._queue = {}
 
-    if self._isPlaying == true then
-        self._isPlaying = false
+    if self._isConnected == true then
+        self._isConnected = false
         self._conn:close()
         self._conn = nil
     end

@@ -1,3 +1,4 @@
+-- https://github.com/stein197/lua-string
 local discordia = require("discordia")
 discordia.extensions()
 _G.fs = require("fs")
@@ -6,13 +7,20 @@ _G.CORO = require("coro-http")
 _G.SPAWN = require("coro-spawn")
 _G.TIMER = require("timer")
 _G.JSON = require("json")
-_G.URL = require("./lib/url.lua")
 _G.DISCORDIA = discordia
 _G.CLIENT = discordia.Client()
 _G.CONFIG = require("./config.lua")
-_G.FUNCTIONS = require("./lib/functions.lua")
+require("./lib/string.lua")
 _G.EMBEDCOLOR = DISCORDIA.Color.fromRGB(170, 26, 232).value
 _G.NODECLUSTERS = "Powered by [NodeClusters](https://nodeclusters.com/billing/link.php?id=8)."
+
+
+function _G.encodeURI(str)
+	return (str:gsub("([^A-Za-z0-9%_%.%-%~])", function(v)
+			return string.upper(string.format("%%%02x", string.byte(v)))
+	end))
+end
+
 
 -- Polyfill
 function math.round(x)

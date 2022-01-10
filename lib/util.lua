@@ -1,7 +1,6 @@
-local functions = {}
--- place to store useful global functions that don't really have a category.
+local util = {}
 
-function functions.print_table(node)
+function util.print_table(node)
     local cache, stack, output = {},{},{}
     local depth = 1
     local output_str = "{\n"
@@ -77,32 +76,15 @@ function functions.print_table(node)
     return output_str
 end
 
-function functions.urlencode (str)
-    str = string.gsub (str, "([^0-9a-zA-Z !'()*._~-])", -- locale independent
-       function (c) return string.format ("%%%02X", string.byte(c)) end)
-    str = string.gsub (str, " ", "+")
-    return str
- end
- 
- function functions.urldecode (str)
-    str = string.gsub (str, "+", " ")
-    str = string.gsub (str, "%%(%x%x)", function(h) return string.char(tonumber(h,16)) end)
-    return str
- end
+function util.format_int(number)
+	local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+	
+	-- reverse the int-string and append a comma to all blocks of 3 digits
+	int = int:reverse():gsub("(%d%d%d)", "%1,")
+	
+	-- reverse the int-string back remove an optional comma and put the 
+	-- optional minus and fractional part back
+	return minus .. int:reverse():gsub("^,", "") .. fraction
+end
 
- function functions.format_int(number)
-
-    local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
-  
-    -- reverse the int-string and append a comma to all blocks of 3 digits
-    int = int:reverse():gsub("(%d%d%d)", "%1,")
-  
-    -- reverse the int-string back remove an optional comma and put the 
-    -- optional minus and fractional part back
-    return minus .. int:reverse():gsub("^,", "") .. fraction
-  end
-
-
-
-
-return functions
+return util
