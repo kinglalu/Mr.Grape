@@ -13,6 +13,18 @@ function command.GetPrefix()
 	return command.prefix
 end
 
+-- Returns integer if valid, nil if invaid
+-- stars must be a number or result of tonumber()
+function command.ValidateStars(stars)
+	stars = math.round(stars)
+	
+	if stars ~= stars or stars < 0 or stars == 0 then
+		return nil
+	end
+	
+	return stars
+end
+
 function command.Register(label, desc, category, func)
 	if not label then
 		print("[command]", "[Error]", "Invalid command name given")
