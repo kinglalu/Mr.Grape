@@ -111,20 +111,24 @@ function Music:play()
 		self._nowPlaying = self._queue[1]
 		
         coroutine.wrap(function()
-            if self._conn then
-                self._conn:setBitrate(self._bitrate)
-                self._conn:setComplexity(10)
-            end
+			self._conn:setBitrate(self._bitrate)
+			self._conn:setComplexity(10)
 			
-            if (pcall(function() self._conn:playFFmpeg(self._nowPlaying.formats[6].url, 108000000) end)) then
+			if not loop then
+				table.remove(self._queue, 1)
+			end
+			
+			if (pcall(function() self._conn:playFFmpeg(self._nowPlaying.formats[6].url, 108000000) end)) then
 				self._nowPlaying = nil
 				
 				if not loop then
 					table.remove(self._queue, 1)
 				end
 				
-				 -- print("Song over")
-               self:play()
+				-- print("Song over")
+				self:play()
+			else
+				print('Error starting FFmpeg in pcall...');
             end
         end)()
     else

@@ -26,6 +26,10 @@ command.Register("play", "play music with Mr Grape!","music", function(msg, args
 			return nil
 		end
 		
+		if not M._isConnected then
+			M:joinVC(msg.member.voiceChannel)
+		end
+		
 		if not M._nowPlaying then
 			M:play()
 		end
@@ -40,12 +44,10 @@ command.Register("play", "play music with Mr Grape!","music", function(msg, args
 				timestamp = DISCORDIA.Date():toISO('T', 'Z'),
 			},
 		})
-		
-		M:joinVC(msg.member.voiceChannel)
 	end)
 end)
 
-command.Register("nowplaying", "find out what song is playing", "music", function(msg, args)
+function nowplaying()
 	local M = Music.Instance(msg.guild, true)
 	
 	 if M._nowPlaying ~= nil then
@@ -62,7 +64,9 @@ command.Register("nowplaying", "find out what song is playing", "music", functio
 	else
         msg.channel:send("You're not in a voice channel.")
     end
-end)
+end
+
+command.Register("nowplaying", "find out what song is playing", "music", nowplaying)
 
 command.Register("skip", "skip the song that is playing","music", function(msg, args)
 	local M = Music.Instance(msg.guild, true)
@@ -71,6 +75,7 @@ command.Register("skip", "skip the song that is playing","music", function(msg, 
         -- TODO: Allow the user to specify how many songs to skip
         if #M._queue >= 1 then
             M:play()
+			nowplaying(msg, args)
         else
 			msg.channel:send("There are no songs left in the queue.")
 		end
