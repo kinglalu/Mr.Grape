@@ -11,10 +11,12 @@ local instances = {}
 
 CLIENT:on("voiceChannelLeave", function(member, channel)
 	local M = Music.Instance(member.guild)
-	
-    if M._botVoiceChannelId == channel.id and #channel.connectedMembers == 1 then
+	-- M._botVoiceChannelId == channel.id and 
+    if #channel.connectedMembers == 1 then
         print("The bot is alone")
-        -- Disconnect from VC after 5 minutes
+		M._voiceChannel = channel;
+        M:leaveVC()
+		-- Disconnect from VC after 5 minutes
         -- timer.setTimeout(300000, M:leaveVC())
     end
 end)
@@ -147,9 +149,10 @@ function Music:toggle(query, msg)
 end
 
 function Music:joinVC(voiceChannel)
+	self._voiceChannel = voiceChannel
     self._isConnected = true
     self._botVoiceChannelId = voiceChannel.id
-    self._conn = voiceChannel:join(voiceChannel)
+    self._conn = voiceChannel:join()
 end
 
 function Music:leaveVC()
@@ -159,13 +162,17 @@ function Music:leaveVC()
     self._isPaused = false
     self._queue = {}
 
+	if self._voiceChannel ~= nil then
+		self._voiceChannel:leave()
+	end
+	
     if self._isConnected == true then
         self._isConnected = false
         self._conn:close()
         self._conn = nil
     end
 	
-	instances[self.guild.id] = nil
+	instances[self._guild.id] = nil
 end
 
 return Music
