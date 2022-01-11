@@ -1,5 +1,15 @@
 local Music = require('../handler/music.lua')
 
+command.Register("dc", "Have Mr Grape leave the vc","music", function(msg, args)
+	local M = Music.Instance(msg.guild, false)
+	if M._isConnected then
+		M:leaveVC()
+		msg:reply("Disconnected.")
+	else
+		msg:reply("You're not listening to music!")
+	end
+end)
+
 command.Register("play", "play music with Mr Grape!","music", function(msg, args)
 	local M = Music.Instance(msg.guild, false)
 	
