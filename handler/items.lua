@@ -39,6 +39,21 @@ DB.KnownItems = {
 		Emoji = "<:shovel:908207500942258176> ",
 		description = "Gives you more stars for digging job.",
 		price = 305
+	},
+	tieronepickaxe = {
+		Emoji = "<:tier1pick:929517969799798884>",
+		description = "Allows you to obtain tier 1 ores while using +dig.",
+		price = 800
+	},
+	tiertwopickaxe = {
+		Emoji = "<:tier2pick:929517970051444756>",
+		description = "Allows you to obtain tier 2 ores while using +dig.",
+		price = 1600
+	},
+	tierthreepickaxe = {
+		Emoji = "<:tier3pick:929517970101788722>",
+		description = "Allows you to obtain tier 3 ores while using +dig.",
+		price = 2400
 	}
 
 }
