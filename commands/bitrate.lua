@@ -1,4 +1,4 @@
-command.Register("bitrate", "skip the song that is playing","music", function(msg, args)
+command.Register("bitrate", "change the bitrate of the song, requires manage channel perms.","music", function(msg, args)
     local author = msg.guild:getMember(msg.author.id)
     if not author:hasPermission("manageChannels") then
         msg.channel:send("You don't have Manage Channel perms! ")
