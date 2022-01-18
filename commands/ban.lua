@@ -9,6 +9,10 @@ command.Register("ban", "Ban users in your server, requires you to have ban memb
         return
       elseif member == author then
       msg:reply("You can't ban yourself!")
+        return
+      elseif not msg.guild:getMember(CLIENT.user.id):hasPermission("banMembers") then
+        msg:reply("I don't have permission to ban people.")
+        return
       end
       for user in msg.mentionedUsers:iter() do
         member = msg.guild:getMember(user.id)
@@ -16,7 +20,7 @@ command.Register("ban", "Ban users in your server, requires you to have ban memb
           msg:reply("Member Banned!")
           member:ban()
         else
-          msg:reply("A occur occured trying to ban, either that person is an admin/mod, or I don't have permission to ban.")
+          msg:reply("A occur occured trying to ban, perhaps that person is an admin/mod.")
         end
     end
 end)
