@@ -26,7 +26,6 @@ command.Register("serverinfo", "displays server info","utility",function(msg, ar
                     {name = 'Roles', value = tostring(#server.roles), inline = true},
                     {name = 'Emojis', value = tostring(#server.emojis), inline = true},
                     {name = "Number Of Users boosting", value = server.premiumSubscriptionCount, inline = true},
-                    {name = "Server Region", value = server.region, inline = true},
                     {name = "ㅤ", value = NODECLUSTERS, inline = false},
                   },
                 color = EMBEDCOLOR,
