@@ -12,7 +12,7 @@ _G.CLIENT = discordia.Client()
 _G.CONFIG = require("./config.lua")
 require("./lib/string.lua")
 _G.EMBEDCOLOR = DISCORDIA.Color.fromRGB(170, 26, 232).value
-_G.NODECLUSTERS = "Powered by [NodeClusters](https://nodeclusters.com/billing/link.php?id=8)."
+_G.NODECLUSTERS = "Powered by [NodeClusters](https://nodeclusters.com/billing/aff.php?aff=7)."
 
 
 function _G.encodeURI(str)

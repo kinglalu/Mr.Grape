@@ -40,7 +40,7 @@ command.Register("info", "Gives you info about Mr Grape!", "utility", function(m
                 {name = "Credits:", value = "Kinglalu, Divide, EndlessVortex\n JS version by DAONE\n Emojis by Goobermeister\n Original bot by Horsey4 & Airplane Bong"},
                 {name = "Number of servers:", value = #CLIENT.guilds},
                 {name = "Total Users: ", value = gettotalusers() },
-                {name = "ㅤ", value = "Powered by [NodeClusters](https://nodeclusters.com/billing/link.php?id=8). Nodeclusters is affordable web and vps hosting for as low as $3 a month.", inline = false},
+                {name = "ㅤ", value = "Powered by [NodeClusters](https://nodeclusters.com/billing/aff.php?aff=7). Nodeclusters is affordable web and vps hosting for as low as $3 a month.", inline = false},
             },
             color = EMBEDCOLOR,
             timestamp = DISCORDIA.Date():toISO('T','Z')
